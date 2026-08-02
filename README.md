@@ -38,8 +38,8 @@ Without # in color:
 https://letter-it.pages.dev/faviconV2?url=https://twitter.com&size=256&color=1da1f2
 
 💻 Usage in your website
-html
-<!-- As a favicon -->
+
+
 <link rel="icon" href="https://letter-it.pages.dev/faviconV2?url=your-domain.com&size=64&color=4285f4">
 
 <!-- As an avatar -->
