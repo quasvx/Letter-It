@@ -3,9 +3,9 @@ Letter-It is a lightweight, fast API for generating dynamic favicons on the fly.
 
 Built with Cloudflare Pages Functions.
 
-https://img.shields.io/github/stars/your-username/letter-it
-https://img.shields.io/github/issues/your-username/letter-it
-https://img.shields.io/github/license/your-username/letter-it
+https://img.shields.io/github/stars/quasvx/letter-it
+https://img.shields.io/github/issues/quasvx/letter-it
+https://img.shields.io/github/license/quasvx/letter-it
 
 🚀 Features
 ⚡ Blazing Fast - Edge generation with Cloudflare Pages Functions
