@@ -46,25 +46,19 @@ export async function onRequest(context) {
 
   // Función para validar y ajustar brillo del color
   function validateAndAdjustColor(hexColor) {
-    // Eliminar # si existe
     const cleanColor = hexColor.replace('#', '');
     
-    // Debe ser exactamente 6 caracteres hexadecimales
     if (!/^[0-9a-fA-F]{6}$/.test(cleanColor)) {
-      return null; // Color inválido
+      return null;
     }
     
-    // Calcular el brillo (percepción humana)
     const r = parseInt(cleanColor.substr(0, 2), 16);
     const g = parseInt(cleanColor.substr(2, 2), 16);
     const b = parseInt(cleanColor.substr(4, 2), 16);
     
-    // Fórmula de luminosidad perceptiva (https://www.w3.org/TR/WCAG20/#relativeluminancedef)
     const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
     
-    // Si el brillo es muy alto (> 0.7), oscurecer el color
     if (luminance > 0.7) {
-      // Oscurecer un 40%
       const darkR = Math.floor(r * 0.6);
       const darkG = Math.floor(g * 0.6);
       const darkB = Math.floor(b * 0.6);
@@ -89,7 +83,6 @@ export async function onRequest(context) {
     }
     finalColor = adjustedColor;
   } else {
-    // Generar colores aleatorios hasta encontrar uno suficientemente oscuro
     let attempts = 0;
     let randomColor;
     let luminance;
@@ -99,7 +92,6 @@ export async function onRequest(context) {
       const g = Math.floor(Math.random() * 256);
       const b = Math.floor(Math.random() * 256);
       
-      // Calcular luminosidad
       luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
       
       if (luminance <= 0.7) {
@@ -111,11 +103,10 @@ export async function onRequest(context) {
       }
       
       attempts++;
-    } while (attempts < 50); // Máximo 50 intentos para evitar loop infinito
+    } while (attempts < 50);
     
-    // Si no encontró un color oscuro después de 50 intentos, usar uno fijo
     if (!randomColor) {
-      randomColor = '#2563eb'; // Azul oscuro por defecto
+      randomColor = '#2563eb';
     }
     
     finalColor = randomColor;
@@ -125,7 +116,7 @@ export async function onRequest(context) {
   const cleanDomain = targetUrl.replace(/^(https?:\/\/)?(www\.)?/, "").split('/')[0];
   const initial = cleanDomain ? cleanDomain.charAt(0).toUpperCase() : "?";
 
-  // Generar el SVG
+  // SVG CENTRADO - viewBox 128x128, texto en x=64 y=64
   const svg = `
   <svg xmlns="http://www.w3.org/2000/svg" width="${sizeNum}" height="${sizeNum}" viewBox="0 0 128 128">
     <rect width="128" height="128" rx="8" fill="${finalColor}" />
@@ -133,7 +124,6 @@ export async function onRequest(context) {
   </svg>
   `.trim();
 
-  // Devolver el SVG
   return new Response(svg, {
     headers: {
       "Content-Type": "image/svg+xml",
