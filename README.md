@@ -17,7 +17,7 @@ Built with Cloudflare Pages Functions.
 
 📖 Usage
 Endpoint
-text
+
 GET /faviconV2
 Parameters
 Parameter	Description	Example
@@ -51,7 +51,7 @@ Code	Description
 400	color must be a valid 6-digit HEX
 400	Invalid parameters
 🎯 Popular color examples
-text
+
 # Google Blue
 ?url=google.com&color=4285f4
 
