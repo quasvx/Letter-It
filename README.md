@@ -27,13 +27,13 @@ color	Custom HEX color (default: random)	#4285f4 or 4285f4
 Examples
 With custom color:
 
-https://letter-it.pages.dev/faviconV2?url=https://google.com&size=128&color=#4285f4
+https://letter-it.pages.dev/faviconV2?url=https://google.com&size=128&color=%4285f4
 
 Without color (random):
 
 https://letter-it.pages.dev/faviconV2?url=https://github.com&size=64
 
-Without # in color:
+Without % in color:
 
 https://letter-it.pages.dev/faviconV2?url=https://twitter.com&size=256&color=1da1f2
 
