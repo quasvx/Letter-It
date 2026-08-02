@@ -55,7 +55,7 @@ export async function onRequest(context) {
     
     // Validar HEX (6 dígitos)
     if (!/^[0-9a-fA-F]{6}$/.test(cleanColor)) {
-      return new Response('Error: Invalid color format. Use 6-digit HEX (e.g., 4285f4, %4285f4, or #4285f4)', {
+      return new Response('Error: Invalid color format. Use 6-digit HEX (e.g., 4285f4)', {
         status: 400,
         headers: { 'Content-Type': 'text/plain' }
       });
