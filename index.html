@@ -1,23 +1,22 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Letter-It | Favicon API</title>
     <style>
-        :root {
-            --bg-color: #050505;
-            --neon-cyan: #00ffff;
-            --neon-pink: #ff00ff;
-            --neon-purple: #b800ff;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            margin: 0;
-            padding: 2rem;
-            background-color: var(--bg-color);
-            color: #ffffff;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f8f9fa;
+            color: #1a1a2e;
+            line-height: 1.6;
+            padding: 3rem 1.5rem;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -25,118 +24,234 @@
         }
 
         .container {
-            max-width: 700px;
+            max-width: 720px;
             width: 100%;
-            background: #0f0f0f;
-            padding: 3rem 2rem;
-            border-radius: 20px;
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            box-shadow: 
-                0 0 10px rgba(0, 255, 255, 0.1), 
-                inset 0 0 20px rgba(0, 255, 255, 0.05);
-            text-align: center;
+            background: #ffffff;
+            padding: 3rem 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
         }
 
-        .logo-container {
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
             margin-bottom: 1.5rem;
         }
 
+        .logo {
+            flex-shrink: 0;
+        }
+
         h1 {
-            font-size: 3.5rem;
-            margin: 0 0 1rem 0;
-            font-weight: 900;
-            letter-spacing: 2px;
-            color: #fff;
-            text-shadow: 
-                0 0 5px #fff, 
-                0 0 10px #fff, 
-                0 0 20px var(--neon-pink), 
-                0 0 40px var(--neon-pink), 
-                0 0 80px var(--neon-pink);
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #1a1a2e;
         }
 
-        p {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            color: #cccccc;
-            margin-bottom: 2rem;
-        }
-
-        .code-box {
-            background: #000000;
-            padding: 1.5rem;
-            border-radius: 10px;
-            border-left: 4px solid var(--neon-cyan);
-            text-align: left;
-            overflow-x: auto;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-            margin-bottom: 2rem;
-        }
-
-        code {
-            font-family: 'Courier New', Courier, monospace;
+        .subtitle {
             font-size: 1.1rem;
-            color: #ffffff;
+            color: #555;
+            margin-bottom: 2rem;
+            border-left: 3px solid #2563eb;
+            padding-left: 1rem;
+        }
+
+        .endpoint-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95rem;
+            border: 1px solid #e2e8f0;
         }
 
         .param {
-            color: var(--neon-cyan);
-            font-weight: bold;
+            color: #2563eb;
+            font-weight: 600;
         }
 
         .value {
-            color: var(--neon-pink);
+            color: #dc2626;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .example-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .example-item svg {
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .example-label {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .example-label strong {
+            color: #1a1a2e;
         }
 
         .features {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.75rem;
+            margin: 2rem 0 1.5rem;
         }
 
-        .badge {
-            background: rgba(184, 0, 255, 0.1);
-            border: 1px solid var(--neon-purple);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
+        .feature {
+            background: #f1f5f9;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #334155;
+        }
+
+        .feature strong {
+            color: #1a1a2e;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #e2e8f0;
+            margin: 2rem 0 1.5rem;
+        }
+
+        .usage {
+            font-size: 0.95rem;
+            color: #475569;
+        }
+
+        .usage code {
+            background: #f1f5f9;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
             font-size: 0.9rem;
-            color: var(--neon-purple);
-            box-shadow: 0 0 10px rgba(184, 0, 255, 0.3);
-            text-shadow: 0 0 5px var(--neon-purple);
+            color: #2563eb;
+        }
+
+        .footer {
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 2rem 1.25rem;
+            }
+
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .subtitle {
+                border-left: none;
+                padding-left: 0;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Logo en SVG puro -->
-        <div class="logo-container">
-            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 128 128">
-                <rect width="128" height="128" rx="28" fill="#050505" stroke="#00ffff" stroke-width="4" />
-                <text x="50%" y="50%" alignment-baseline="central" text-anchor="middle" fill="#00ffff" font-family="sans-serif" font-size="70" font-weight="900" style="text-shadow: 0 0 20px #00ffff;">L</text>
-            </svg>
+        <!-- Header con logo -->
+        <div class="header">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 128 128">
+                    <rect width="128" height="128" rx="8" fill="#2563eb" />
+                    <text x="50%" y="50%" alignment-baseline="central" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="68" font-weight="700">L</text>
+                </svg>
+            </div>
+            <h1>Letter-It</h1>
         </div>
 
-        <h1>LETTER-IT</h1>
-        <p>Tu API rápida y sin complicaciones para generar favicons dinámicos al vuelo. Solo pasa tu URL y obtén una inicial en SVG lista para usar.</p>
+        <div class="subtitle">
+            Simple, fast favicon generation at the edge.
+        </div>
 
-        <div class="code-box">
+        <!-- Endpoint -->
+        <div class="endpoint-box">
             <code>
-                https://letter-it.pages.dev/faviconV2?<br>
-                <span class="param">url</span>=<span class="value">https://quasvx.cc.cd</span>&<br>
-                <span class="param">size</span>=<span class="value">256</span>
+                /faviconV2?<span class="param">url</span>=<span class="value">https://google.com</span>&<span class="param">size</span>=<span class="value">128</span>
             </code>
         </div>
 
-        <p><strong>¿Cómo funciona?</strong><br>
-        El endpoint <code>/faviconV2</code> agarra el parámetro <code>url</code>, extrae la primera letra de tu dominio, le asigna un color de fondo aleatorio y te devuelve una imagen lista para incrustar.</p>
+        <!-- Examples -->
+        <div class="example-grid">
+            <div class="example-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 128 128">
+                    <rect width="128" height="128" rx="8" fill="#4285f4" />
+                    <text x="50%" y="50%" alignment-baseline="central" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="700">G</text>
+                </svg>
+                <span class="example-label"><strong>google.com</strong> → G</span>
+            </div>
+            <div class="example-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 128 128">
+                    <rect width="128" height="128" rx="8" fill="#ea4335" />
+                    <text x="50%" y="50%" alignment-baseline="central" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="700">G</text>
+                </svg>
+                <span class="example-label"><strong>github.com</strong> → G</span>
+            </div>
+        </div>
 
+        <!-- Features -->
         <div class="features">
-            <span class="badge">⚡ Rápido (Cloudflare Edge)</span>
-            <span class="badge">🎨 SVG Nativo</span>
-            <span class="badge">📏 Tamaño Personalizable</span>
+            <span class="feature"><strong>⚡ Edge</strong> Cloudflare Workers</span>
+            <span class="feature"><strong>🎨 SVG</strong> Native vector</span>
+            <span class="feature"><strong>📏 Custom</strong> Size parameter</span>
+            <span class="feature"><strong>🔲 Square</strong> Clean design</span>
+        </div>
+
+        <hr>
+
+        <!-- Usage -->
+        <div class="usage">
+            <p>
+                <strong>How it works:</strong> The endpoint extracts the first letter from your domain, 
+                assigns a random background color, and returns an SVG image ready to use as a favicon 
+                or avatar.
+            </p>
+            <br>
+            <p>
+                <strong>Parameters:</strong><br>
+                <code>url</code> — The domain to generate the favicon for<br>
+                <code>size</code> — Output size in pixels (default: 256)
+            </p>
+        </div>
+
+        <div class="footer">
+            &copy; 2026 Letter-It &middot; Built on Cloudflare Workers
         </div>
     </div>
 
