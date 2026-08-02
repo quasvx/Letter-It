@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter-It | Favicon API</title>
+    <style>
+        :root {
+            --bg-color: #050505;
+            --neon-cyan: #00ffff;
+            --neon-pink: #ff00ff;
+            --neon-purple: #b800ff;
+        }
+
+        body {
+            margin: 0;
+            padding: 2rem;
+            background-color: var(--bg-color);
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: #0f0f0f;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            box-shadow: 
+                0 0 10px rgba(0, 255, 255, 0.1), 
+                inset 0 0 20px rgba(0, 255, 255, 0.05);
+            text-align: center;
+        }
+
+        .logo-container {
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin: 0 0 1rem 0;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 
+                0 0 5px #fff, 
+                0 0 10px #fff, 
+                0 0 20px var(--neon-pink), 
+                0 0 40px var(--neon-pink), 
+                0 0 80px var(--neon-pink);
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #cccccc;
+            margin-bottom: 2rem;
+        }
+
+        .code-box {
+            background: #000000;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--neon-cyan);
+            text-align: left;
+            overflow-x: auto;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+            margin-bottom: 2rem;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1rem;
+            color: #ffffff;
+        }
+
+        .param {
+            color: var(--neon-cyan);
+            font-weight: bold;
+        }
+
+        .value {
+            color: var(--neon-pink);
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .badge {
+            background: rgba(184, 0, 255, 0.1);
+            border: 1px solid var(--neon-purple);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--neon-purple);
+            box-shadow: 0 0 10px rgba(184, 0, 255, 0.3);
+            text-shadow: 0 0 5px var(--neon-purple);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Logo en SVG puro -->
+        <div class="logo-container">
+            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 128 128">
+                <rect width="128" height="128" rx="28" fill="#050505" stroke="#00ffff" stroke-width="4" />
+                <text x="50%" y="50%" alignment-baseline="central" text-anchor="middle" fill="#00ffff" font-family="sans-serif" font-size="70" font-weight="900" style="text-shadow: 0 0 20px #00ffff;">L</text>
+            </svg>
+        </div>
+
+        <h1>LETTER-IT</h1>
+        <p>Tu API rápida y sin complicaciones para generar favicons dinámicos al vuelo. Solo pasa tu URL y obtén una inicial en SVG lista para usar.</p>
+
+        <div class="code-box">
+            <code>
+                https://letter-it.pages.dev/faviconV2?<br>
+                <span class="param">url</span>=<span class="value">https://quasvx.cc.cd</span>&<br>
+                <span class="param">size</span>=<span class="value">256</span>
+            </code>
+        </div>
+
+        <p><strong>¿Cómo funciona?</strong><br>
+        El endpoint <code>/faviconV2</code> agarra el parámetro <code>url</code>, extrae la primera letra de tu dominio, le asigna un color de fondo aleatorio y te devuelve una imagen lista para incrustar.</p>
+
+        <div class="features">
+            <span class="badge">⚡ Rápido (Cloudflare Edge)</span>
+            <span class="badge">🎨 SVG Nativo</span>
+            <span class="badge">📏 Tamaño Personalizable</span>
+        </div>
+    </div>
+
+</body>
+</html>
