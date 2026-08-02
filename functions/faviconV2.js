@@ -13,11 +13,17 @@ export async function onRequest(context) {
   // Generamos el color aleatorio
   const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
 
-  // Creamos el SVG usando el tamaño que pasaste por URL
+  // Creamos el SVG - Cuadrado con bordes redondeados y el texto centrado
   const svg = `
   <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 128 128">
-    <rect width="128" height="128" rx="28" fill="${randomColor}" />
-    <text x="50%" y="50%" alignment-baseline="central" text-anchor="middle" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="64" font-weight="bold">${initial}</text>
+    <!-- Fondo cuadrado con bordes redondeados -->
+    <rect width="128" height="128" rx="8" fill="${randomColor}" />
+    
+    <!-- Borde opcional (descomentar si quieres un borde visible) -->
+    <!-- <rect width="126" height="126" x="1" y="1" rx="7" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.3"/> -->
+    
+    <!-- Texto centrado -->
+    <text x="50%" y="50%" alignment-baseline="central" text-anchor="middle" fill="#FFFFFF" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="bold">${initial}</text>
   </svg>
   `.trim();
 
