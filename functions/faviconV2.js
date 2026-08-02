@@ -27,7 +27,7 @@ export async function onRequest(context) {
     finalColor = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
   }
 
-  // Creamos el SVG - Ahora con el texto perfectamente centrado
+  // Creamos el SVG - Cuadrado con bordes redondeados y el texto centrado
   const svg = `
   <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 128 128">
     <rect width="128" height="128" rx="8" fill="${finalColor}" />
