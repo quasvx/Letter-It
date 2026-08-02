@@ -42,10 +42,11 @@ https://letter-it.pages.dev/faviconV2?url=https://twitter.com&size=256&color=1da
 
 (<)link rel="icon" href="https://letter-it.pages.dev/faviconV2?url=your-domain.com&size=64&color=4285f4"(>)
 
-dont place the ( and )
+dont place the "(" and ")"
 
 <!-- As an avatar -->
-<img src="https://letter-it.pages.dev/faviconV2?url=user.com&size=128&color=ff0000" alt="Avatar">
+(<)img src="https://letter-it.pages.dev/faviconV2?url=user.com&size=128&color=ff0000" alt="Avatar"(>)
+
 📝 Error responses
 Code	Description
 400	url is required or invalid format
