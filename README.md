@@ -35,7 +35,7 @@ https://letter-it.pages.dev/faviconV2?url=https://github.com&size=64
 
 Without # in color:
 
-https://letter-it.pages.dev/faviconV2?url=https://twitter.com&color=1da1f2
+https://letter-it.pages.dev/faviconV2?url=https://twitter.com&size=256%color=1da1f2
 
 💻 Usage in your website
 html
