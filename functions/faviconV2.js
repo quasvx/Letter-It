@@ -1,6 +1,7 @@
 export async function onRequest(context) {
   const url = new URL(context.request.url);
   
+  // Obtener parámetros
   const targetUrl = url.searchParams.get('url') || '';
   const size = url.searchParams.get('size') || '256';
   const customColor = url.searchParams.get('color') || '';
@@ -34,20 +35,36 @@ export async function onRequest(context) {
   let finalColor;
   
   if (customColor) {
-    // Eliminar # si existe (por si acaso)
-    const cleanColor = customColor.replace('#', '');
+    // Decodificar URL (convierte %23 a #)
+    let decodedColor = customColor;
+    try {
+      decodedColor = decodeURIComponent(customColor);
+    } catch {
+      // Si falla, usar el original
+      decodedColor = customColor;
+    }
     
-    // Validar HEX
+    // Si empieza con %, eliminarlo (por si acaso)
+    let cleanColor = decodedColor;
+    if (cleanColor.startsWith('%')) {
+      cleanColor = cleanColor.substring(1);
+    }
+    
+    // Eliminar # si existe
+    cleanColor = cleanColor.replace('#', '');
+    
+    // Validar HEX (6 dígitos)
     if (!/^[0-9a-fA-F]{6}$/.test(cleanColor)) {
-      return new Response('Error: Invalid color format. Use 6-digit HEX (e.g., 4285f4 or #4285f4)', {
+      return new Response('Error: Invalid color format. Use 6-digit HEX (e.g., 4285f4, %4285f4, or #4285f4)', {
         status: 400,
         headers: { 'Content-Type': 'text/plain' }
       });
     }
     
     finalColor = '#' + cleanColor;
+    
   } else {
-    // Color aleatorio
+    // Color aleatorio (oscuro)
     const r = Math.floor(Math.random() * 200) + 55;
     const g = Math.floor(Math.random() * 200) + 55;
     const b = Math.floor(Math.random() * 200) + 55;
@@ -58,9 +75,11 @@ export async function onRequest(context) {
       b.toString(16).padStart(2, '0');
   }
 
+  // Extraer inicial
   const cleanDomain = targetUrl.replace(/^(https?:\/\/)?(www\.)?/, "").split('/')[0];
   const initial = cleanDomain ? cleanDomain.charAt(0).toUpperCase() : "?";
 
+  // Generar SVG
   const svg = `
   <svg xmlns="http://www.w3.org/2000/svg" width="${sizeNum}" height="${sizeNum}" viewBox="0 0 128 128">
     <rect width="128" height="128" rx="8" fill="${finalColor}" />
