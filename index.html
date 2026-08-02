@@ -78,6 +78,11 @@
             color: #dc2626;
         }
 
+        .optional {
+            color: #6b7280;
+            font-weight: 400;
+        }
+
         .example-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -149,6 +154,55 @@
             color: #2563eb;
         }
 
+        .usage .param-table {
+            width: 100%;
+            margin: 1rem 0;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .usage .param-table th {
+            text-align: left;
+            padding: 0.5rem 0.5rem 0.5rem 0;
+            font-weight: 600;
+            color: #1a1a2e;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .usage .param-table td {
+            padding: 0.5rem 0.5rem 0.5rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .usage .param-table .param-name {
+            color: #2563eb;
+            font-family: monospace;
+            font-weight: 600;
+        }
+
+        .usage .param-table .param-desc {
+            color: #64748b;
+        }
+
+        .color-demo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .color-demo svg {
+            flex-shrink: 0;
+        }
+
+        .color-demo code {
+            font-size: 0.85rem;
+        }
+
         .footer {
             margin-top: 2rem;
             font-size: 0.85rem;
@@ -179,6 +233,11 @@
                 padding-left: 0;
                 text-align: center;
             }
+
+            .color-demo {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -200,28 +259,28 @@
             Simple, fast favicon generation at the edge.
         </div>
 
-        <!-- Endpoint -->
+        <!-- Endpoint con color -->
         <div class="endpoint-box">
             <code>
-                /faviconV2?<span class="param">url</span>=<span class="value">https://google.com</span>&<span class="param">size</span>=<span class="value">128</span>
+                /faviconV2?<span class="param">url</span>=<span class="value">https://google.com</span>&<span class="param">size</span>=<span class="value">128</span>&<span class="param">color</span>=<span class="value">#4285f4</span> <span class="optional">(optional)</span>
             </code>
         </div>
 
-        <!-- Examples -->
+        <!-- Examples con colores personalizados -->
         <div class="example-grid">
             <div class="example-item">
                 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 128 128">
                     <rect width="128" height="128" rx="8" fill="#4285f4" />
                     <text x="50%" y="50%" alignment-baseline="central" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="700">G</text>
                 </svg>
-                <span class="example-label"><strong>google.com</strong> → G</span>
+                <span class="example-label"><strong>google.com</strong> → <code>color=#4285f4</code></span>
             </div>
             <div class="example-item">
                 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 128 128">
                     <rect width="128" height="128" rx="8" fill="#ea4335" />
                     <text x="50%" y="50%" alignment-baseline="central" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="700">G</text>
                 </svg>
-                <span class="example-label"><strong>github.com</strong> → G</span>
+                <span class="example-label"><strong>google.com</strong> → <code>color=#ea4335</code></span>
             </div>
         </div>
 
@@ -230,28 +289,59 @@
             <span class="feature"><strong>⚡ Edge</strong> Cloudflare Workers</span>
             <span class="feature"><strong>🎨 SVG</strong> Native vector</span>
             <span class="feature"><strong>📏 Custom</strong> Size parameter</span>
-            <span class="feature"><strong>🔲 Square</strong> Clean design</span>
+            <span class="feature"><strong>🎯 Color</strong> Custom HEX support</span>
         </div>
 
         <hr>
 
         <!-- Usage -->
         <div class="usage">
-            <p>
-                <strong>How it works:</strong> The endpoint extracts the first letter from your domain, 
-                assigns a random background color, and returns an SVG image ready to use as a favicon 
-                or avatar.
-            </p>
+            <p><strong>How it works:</strong> The endpoint extracts the first letter from your domain, assigns a random background color (or your custom color), and returns an SVG image ready to use as a favicon or avatar.</p>
+            
             <br>
-            <p>
-                <strong>Parameters:</strong><br>
-                <code>url</code> — The domain to generate the favicon for<br>
-                <code>size</code> — Output size in pixels (default: 256)
-            </p>
+            <p><strong>Parameters:</strong></p>
+            <table class="param-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="param-name">url</span></td>
+                        <td class="param-desc">Domain to generate the favicon for</td>
+                        <td><code>https://google.com</code></td>
+                    </tr>
+                    <tr>
+                        <td><span class="param-name">size</span></td>
+                        <td class="param-desc">Output size in pixels (default: 256)</td>
+                        <td><code>128</code></td>
+                    </tr>
+                    <tr>
+                        <td><span class="param-name">color</span></td>
+                        <td class="param-desc">Custom HEX color (optional, random if omitted)</td>
+                        <td><code>#4285f4</code> or <code>4285f4</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Color demo -->
+            <div class="color-demo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 128 128">
+                    <rect width="128" height="128" rx="8" fill="#2563eb" />
+                    <text x="50%" y="50%" alignment-baseline="central" text-anchor="middle" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="700">C</text>
+                </svg>
+                <div>
+                    <strong>Custom color example:</strong><br>
+                    <code>/faviconV2?url=example.com&color=2563eb</code>
+                </div>
+            </div>
         </div>
 
         <div class="footer">
-            &copy; 2026 Letter-It &middot; Built on Cloudflare Workers
+            &copy; 2026 Letter-It &middot; Built on Cloudflare Pages (made as a Function)
         </div>
     </div>
 
