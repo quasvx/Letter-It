@@ -3,11 +3,6 @@ Letter-It is a lightweight, fast API for generating dynamic favicons on the fly.
 
 Built with Cloudflare Pages Functions.
 
-https://img.shields.io/github/stars/quasvx/letter-it
-
-https://img.shields.io/github/issues/quasvx/letter-it
-
-https://img.shields.io/github/license/quasvx/letter-it
 
 🚀 Features
 ⚡ Blazing Fast - Edge generation with Cloudflare Pages Functions
@@ -42,37 +37,6 @@ Without # in color:
 
 text
 https://letter-it.pages.dev/faviconV2?url=https://twitter.com&color=1da1f2
-🛠️ Installation
-1. Clone the repository
-bash
-git clone https://github.com/your-username/letter-it.git
-cd letter-it
-2. File structure
-text
-/
-├── functions/
-│   └── faviconV2.js    # Cloudflare Pages Function
-├── public/
-│   └── index.html      # Documentation page
-└── README.md
-3. Deploy to Cloudflare Pages
-Option A: CLI
-
-bash
-npx wrangler pages deploy .
-Option B: Git
-
-bash
-git push origin main
-Option C: Dashboard
-
-Go to Cloudflare Dashboard → Pages
-
-Connect your repository
-
-Set output directory: public
-
-Deploy
 
 💻 Usage in your website
 html
