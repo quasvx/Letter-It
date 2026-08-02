@@ -1,4 +1,5 @@
 Letter-It 🎨
+
 Letter-It is a lightweight, fast API for generating dynamic favicons on the fly. It extracts the first letter from any domain and converts it into a clean, square SVG with customizable colors.
 
 Built with Cloudflare Pages Functions.
