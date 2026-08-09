@@ -1,9 +1,28 @@
-// functions/faviconV1.js
+// functions/faviconV2.js
 export async function onRequest(context) {
   const url = new URL(context.request.url);
   const targetUrl = url.searchParams.get('url') || '';
   const size = url.searchParams.get('size') || '256';
   const customColor = url.searchParams.get('color') || '';
+
+  // --- REGLA: SI ES LETTER-IT, PNG ESTÁTICO ---
+  const cleanDomain = targetUrl.replace(/^(https?:\/\/)?(www\.)?/, "").split('/')[0];
+  
+  if (cleanDomain.toLowerCase() === 'letter-it.b4.cc.cd' || 
+      cleanDomain.toLowerCase() === 'letter-it.pages.dev') {
+    try {
+      const image = await context.env.ASSETS.fetch(new URL('/images/favicon.png', context.request.url));
+      if (image.status === 200) {
+        return new Response(image.body, {
+          headers: {
+            'Content-Type': 'image/png',
+            'Cache-Control': 'public, max-age=86400',
+            'Access-Control-Allow-Origin': '*'
+          }
+        });
+      }
+    } catch {}
+  }
 
   // --- VALIDAR URL ---
   if (!targetUrl) {
@@ -27,8 +46,8 @@ export async function onRequest(context) {
     });
   }
 
-  const cleanDomain = finalUrl.replace(/^(https?:\/\/)?(www\.)?/, "").split('/')[0];
-  const initial = cleanDomain ? cleanDomain.charAt(0).toUpperCase() : "?";
+  const domain = finalUrl.replace(/^(https?:\/\/)?(www\.)?/, "").split('/')[0];
+  const initial = domain ? domain.charAt(0).toUpperCase() : "?";
   const sizeNum = parseInt(size) || 256;
 
   // --- MANEJO DEL COLOR ---
@@ -56,43 +75,22 @@ export async function onRequest(context) {
     displayColor = finalColor.replace('#', '');
   }
 
-  // --- GENERAR SVG CON TÍTULO (para accesibilidad y tooltip) ---
+  // --- GENERAR SVG CON TÍTULO ---
+  const titleText = `${domain} - ${sizeNum}px - ${displayColor}`;
+  
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${sizeNum}" height="${sizeNum}" viewBox="0 0 128 128">
-    <title>${cleanDomain} - ${sizeNum}px - ${displayColor}</title>
+    <title>${titleText}</title>
     <rect width="128" height="128" rx="8" fill="${finalColor}" />
     <text x="64" y="64" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="64" font-weight="bold">${initial}</text>
   </svg>`;
 
-  // --- CONVERTIR SVG A PNG USANDO API EXTERNA ---
-  try {
-    const svgEncoded = encodeURIComponent(svg);
-    const pngUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${sizeNum}x${sizeNum}&data=${svgEncoded}&format=png`;
-    
-    const response = await fetch(pngUrl);
-    
-    if (!response.ok) {
-      throw new Error('Failed to convert SVG to PNG');
+  // --- DEVOLVER SVG (NO PNG) ---
+  return new Response(svg, {
+    headers: {
+      'Content-Type': 'image/svg+xml',
+      'Cache-Control': 'public, max-age=86400',
+      'Access-Control-Allow-Origin': '*',
+      'Content-Disposition': `inline; filename="${domain}-${sizeNum}x${sizeNum}-${displayColor}.svg"`
     }
-    
-    const pngBuffer = await response.arrayBuffer();
-
-    return new Response(pngBuffer, {
-      headers: {
-        'Content-Type': 'image/png',
-        'Cache-Control': 'public, max-age=86400',
-        'Access-Control-Allow-Origin': '*',
-        'Content-Disposition': `inline; filename="${cleanDomain}-${sizeNum}.png"`
-      }
-    });
-    
-  } catch (error) {
-    // Fallback: devolver SVG si falla la conversión
-    return new Response(svg, {
-      headers: {
-        'Content-Type': 'image/svg+xml',
-        'Cache-Control': 'public, max-age=86400',
-        'Access-Control-Allow-Origin': '*'
-      }
-    });
-  }
+  });
 }
