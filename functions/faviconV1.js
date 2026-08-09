@@ -31,44 +31,30 @@ export async function onRequest(context) {
     });
   }
 
-  // --- REGLA: SI ES LETTER-IT, SVG CON PNG INCRUSTADO ---
+  // --- REGLA: SI ES LETTER-IT, DEVOLVER PNG ---
   const cleanDomain = targetUrl.replace(/^(https?:\/\/)?(www\.)?/, "").split('/')[0];
   
   if (cleanDomain.toLowerCase() === 'letter-it.b4.cc.cd' || 
       cleanDomain.toLowerCase() === 'letter-it.pages.dev') {
     try {
-      const sizeNum = parseInt(size) || 256;
-      
       // Obtener la imagen PNG original
       const imageResponse = await context.env.ASSETS.fetch(new URL('/images/favicon.png', context.request.url));
       
       if (imageResponse.status === 200) {
         const imageBuffer = await imageResponse.arrayBuffer();
         
-        // Convertir a base64
-        const base64 = btoa(String.fromCharCode(...new Uint8Array(imageBuffer)));
-        
-        // SVG con la imagen incrustada y redimensionada + bordes redondeados
-        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${sizeNum}" height="${sizeNum}" viewBox="0 0 ${sizeNum} ${sizeNum}">
-          <defs>
-            <clipPath id="rounded">
-              <rect width="${sizeNum}" height="${sizeNum}" rx="${sizeNum * 0.0625}" />
-            </clipPath>
-          </defs>
-          <image href="data:image/png;base64,${base64}" width="${sizeNum}" height="${sizeNum}" clip-path="url(#rounded)" />
-        </svg>`;
-
-        return new Response(svg, {
+        // Devolver el PNG directamente
+        return new Response(imageBuffer, {
           headers: {
-            'Content-Type': 'image/svg+xml',
+            'Content-Type': 'image/png',
             'Cache-Control': 'public, max-age=86400',
             'Access-Control-Allow-Origin': '*',
-            'Content-Disposition': `inline; filename="letter-it-${sizeNum}x${sizeNum}-rounded.svg"`
+            'Content-Disposition': `inline; filename="letter-it-favicon.png"`
           }
         });
       }
     } catch {
-      // Fallback: SVG simple
+      // Si falla, continuar con SVG normal
     }
   }
 
