@@ -62,7 +62,7 @@ export async function onRequest(context) {
 
   // --- MANEJO DEL COLOR ---
   let finalColor;
-  let displayColor = 'random'; // Para mostrar en el título
+  let displayColor = 'random';
   
   if (customColor) {
     let decodedColor = customColor;
@@ -86,7 +86,7 @@ export async function onRequest(context) {
     }
     
     finalColor = '#' + cleanColor;
-    displayColor = cleanColor; // Guardar sin # para el título
+    displayColor = cleanColor;
   } else {
     const r = Math.floor(Math.random() * 200) + 55;
     const g = Math.floor(Math.random() * 200) + 55;
@@ -97,27 +97,73 @@ export async function onRequest(context) {
       g.toString(16).padStart(2, '0') + 
       b.toString(16).padStart(2, '0');
     
-    displayColor = finalColor.replace('#', ''); // Mostrar el color generado
+    displayColor = finalColor.replace('#', '');
   }
 
-  // --- TÍTULO AUTOMÁTICO ---
-  const pageTitle = `${cleanDomain} - ${sizeNum}px - ${displayColor}`;
-
-  // Generar SVG con título
-  const svg = `
+  // --- GENERAR EL SVG ---
+  const svgContent = `
   <svg xmlns="http://www.w3.org/2000/svg" width="${sizeNum}" height="${sizeNum}" viewBox="0 0 128 128">
     <rect width="128" height="128" rx="8" fill="${finalColor}" />
     <text x="64" y="64" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF" font-family="system-ui, -apple-system, sans-serif" font-size="64" font-weight="bold">${initial}</text>
   </svg>
   `.trim();
 
-  return new Response(svg, {
+  // --- GENERAR HTML SOLO CON TÍTULO Y SVG ---
+  const pageTitle = `${cleanDomain} - ${sizeNum}px - ${displayColor}`;
+  
+  const html = `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter-It | ${pageTitle}</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #0a0a0f;
+      }
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+      }
+      .favicon-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 3rem;
+        background: #12121a;
+        border-radius: 16px;
+        border: 1px solid rgba(37, 99, 235, 0.15);
+        box-shadow: 0 0 60px rgba(37, 99, 235, 0.05);
+      }
+      .favicon-wrapper svg {
+        display: block;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="favicon-wrapper">
+        ${svgContent}
+      </div>
+    </div>
+  </body>
+  </html>
+  `;
+
+  return new Response(html, {
     headers: {
-      'Content-Type': 'image/svg+xml',
-      'Cache-Control': 'public, max-age=86400',
-      'Cache-Control': 'public, max-age=86400',
-      'Access-Control-Allow-Origin': '*',
-      'Content-Disposition': `inline; filename="${cleanDomain}-${sizeNum}x${sizeNum}-${displayColor}.svg"`
+      'Content-Type': 'text/html',
+      'Cache-Control': 'public, max-age=3600',
+      'Access-Control-Allow-Origin': '*'
     }
   });
 }
