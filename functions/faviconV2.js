@@ -62,7 +62,6 @@ export async function onRequest(context) {
   }
 
   let finalColor;
-  let displayColor = 'random';
   
   if (customColor) {
     let decodedColor = customColor;
@@ -86,7 +85,6 @@ export async function onRequest(context) {
     }
     
     finalColor = '#' + cleanColor;
-    displayColor = cleanColor;
   } else {
     const r = Math.floor(Math.random() * 200) + 55;
     const g = Math.floor(Math.random() * 200) + 55;
@@ -95,47 +93,19 @@ export async function onRequest(context) {
       r.toString(16).padStart(2, '0') + 
       g.toString(16).padStart(2, '0') + 
       b.toString(16).padStart(2, '0');
-    displayColor = finalColor.replace('#', '');
   }
 
-  const svgContent = `
+  const svg = `
   <svg xmlns="http://www.w3.org/2000/svg" width="${sizeNum}" height="${sizeNum}" viewBox="0 0 128 128">
     <rect width="128" height="128" rx="8" fill="${finalColor}" />
     <text x="64" y="64" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="64" font-weight="bold">${initial}</text>
   </svg>
   `.trim();
 
-  // --- GENERAR HTML CON TÍTULO Y SVG CENTRADO ---
-  const pageTitle = `${cleanDomain} - ${sizeNum}px - ${displayColor}`;
-  
-  const html = `
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Letter-It | ${pageTitle}</title>
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        background: #0a0a0f;
-      }
-    </style>
-  </head>
-  <body>
-    ${svgContent}
-  </body>
-  </html>
-  `;
-
-  return new Response(html, {
+  return new Response(svg, {
     headers: {
-      'Content-Type': 'text/html',
-      'Cache-Control': 'public, max-age=3600',
+      'Content-Type': 'image/svg+xml',
+      'Cache-Control': 'public, max-age=86400',
       'Access-Control-Allow-Origin': '*'
     }
   });
