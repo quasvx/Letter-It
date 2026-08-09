@@ -18,28 +18,44 @@ export async function onRequest(context) {
     });
   }
   
-  // --- LÓGICA NORMAL DE FAVICONV2 ---
+  // --- LÓGICA DE FAVICONV2 ---
   const targetUrl = url.searchParams.get('url') || '';
   const size = url.searchParams.get('size') || '256';
   const customColor = url.searchParams.get('color') || '';
 
-  // --- REGLA: SI ES LETTER-IT, PNG ESTÁTICO ---
+  // --- REGLA: SI ES LETTER-IT, USAR PNG Y REDIMENSIONAR ---
   const cleanDomain = targetUrl.replace(/^(https?:\/\/)?(www\.)?/, "").split('/')[0];
   
   if (cleanDomain.toLowerCase() === 'letter-it.b4.cc.cd' || 
       cleanDomain.toLowerCase() === 'letter-it.pages.dev') {
     try {
-      const image = await context.env.ASSETS.fetch(new URL('/images/favicon.png', context.request.url));
-      if (image.status === 200) {
-        return new Response(image.body, {
+      // Obtener la imagen PNG original
+      const imageResponse = await context.env.ASSETS.fetch(new URL('/images/favicon.png', context.request.url));
+      
+      if (imageResponse.status === 200) {
+        const imageBuffer = await imageResponse.arrayBuffer();
+        const sizeNum = parseInt(size) || 256;
+        
+        // Convertir a base64 para incrustar en SVG
+        const base64 = btoa(String.fromCharCode(...new Uint8Array(imageBuffer)));
+        
+        // Crear SVG que contiene la imagen PNG redimensionada (sin bordes redondeados)
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${sizeNum}" height="${sizeNum}" viewBox="0 0 ${sizeNum} ${sizeNum}">
+          <image href="data:image/png;base64,${base64}" width="${sizeNum}" height="${sizeNum}" />
+        </svg>`;
+
+        return new Response(svg, {
           headers: {
-            'Content-Type': 'image/png',
+            'Content-Type': 'image/svg+xml',
             'Cache-Control': 'public, max-age=86400',
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': '*',
+            'Content-Disposition': `inline; filename="letter-it-${sizeNum}x${sizeNum}-square.svg"`
           }
         });
       }
-    } catch {}
+    } catch {
+      // Fallback: generar SVG simple
+    }
   }
 
   // --- VALIDAR URL ---
@@ -68,7 +84,7 @@ export async function onRequest(context) {
   const initial = domain ? domain.charAt(0).toUpperCase() : "?";
   const sizeNum = parseInt(size) || 256;
 
-  // --- MANEJO DEL COLOR (EVITANDO TONOS CLAROS) ---
+  // --- MANEJO DEL COLOR ---
   let finalColor;
   let displayColor = 'random';
   
@@ -81,14 +97,12 @@ export async function onRequest(context) {
       });
     }
     
-    // Verificar si el color es muy claro
     const r = parseInt(cleanColor.substr(0, 2), 16);
     const g = parseInt(cleanColor.substr(2, 2), 16);
     const b = parseInt(cleanColor.substr(4, 2), 16);
     const brightness = (r * 299 + g * 587 + b * 114) / 1000;
     
     if (brightness > 200) {
-      // Si es muy claro, oscurecerlo
       const darkR = Math.floor(r * 0.5);
       const darkG = Math.floor(g * 0.5);
       const darkB = Math.floor(b * 0.5);
@@ -102,12 +116,11 @@ export async function onRequest(context) {
       displayColor = cleanColor;
     }
   } else {
-    // Generar color aleatorio (siempre oscuro)
     let r, g, b, brightness;
     let attempts = 0;
     
     do {
-      r = Math.floor(Math.random() * 200) + 30; // 30-230
+      r = Math.floor(Math.random() * 200) + 30;
       g = Math.floor(Math.random() * 200) + 30;
       b = Math.floor(Math.random() * 200) + 30;
       brightness = (r * 299 + g * 587 + b * 114) / 1000;
@@ -121,16 +134,12 @@ export async function onRequest(context) {
     displayColor = finalColor.replace('#', '');
   }
 
-  // --- GENERAR SVG CON BORDE CUADRADO (SIN REDONDEO) ---
+  // --- GENERAR SVG CON BORDES CUADRADOS ---
   const titleText = `${domain} - ${sizeNum}px - ${displayColor}`;
   
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${sizeNum}" height="${sizeNum}" viewBox="0 0 128 128">
     <title>${titleText}</title>
-    <!-- Fondo cuadrado SIN bordes redondeados (rx="0") -->
     <rect width="128" height="128" rx="0" fill="${finalColor}" />
-    <!-- Borde sutil para definir el cuadrado -->
-    <rect width="128" height="128" rx="0" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
-    <!-- Texto centrado -->
     <text x="64" y="64" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="64" font-weight="bold">${initial}</text>
   </svg>`;
 
@@ -139,7 +148,7 @@ export async function onRequest(context) {
       'Content-Type': 'image/svg+xml',
       'Cache-Control': 'public, max-age=86400',
       'Access-Control-Allow-Origin': '*',
-      'Content-Disposition': `inline; filename="${domain}-${sizeNum}x${sizeNum}-${displayColor}.svg"`
+      'Content-Disposition': `inline; filename="${domain}-${sizeNum}x${sizeNum}-${displayColor}-square.svg"`
     }
   });
 }
