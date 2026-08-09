@@ -23,23 +23,44 @@ export async function onRequest(context) {
   const size = url.searchParams.get('size') || '256';
   const customColor = url.searchParams.get('color') || '';
 
-  // --- REGLA: SI ES LETTER-IT, PNG ESTÁTICO ---
+  // --- REGLA: SI ES LETTER-IT, USAR PNG Y REDIMENSIONAR ---
   const cleanDomain = targetUrl.replace(/^(https?:\/\/)?(www\.)?/, "").split('/')[0];
   
   if (cleanDomain.toLowerCase() === 'letter-it.b4.cc.cd' || 
       cleanDomain.toLowerCase() === 'letter-it.pages.dev') {
     try {
-      const image = await context.env.ASSETS.fetch(new URL('/images/favicon.png', context.request.url));
-      if (image.status === 200) {
-        return new Response(image.body, {
+      // Obtener la imagen PNG original
+      const imageResponse = await context.env.ASSETS.fetch(new URL('/images/favicon.png', context.request.url));
+      
+      if (imageResponse.status === 200) {
+        const imageBuffer = await imageResponse.arrayBuffer();
+        const sizeNum = parseInt(size) || 256;
+        
+        // Convertir a base64 para incrustar en SVG
+        const base64 = btoa(String.fromCharCode(...new Uint8Array(imageBuffer)));
+        
+        // Crear SVG que contiene la imagen PNG redimensionada con bordes redondeados
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${sizeNum}" height="${sizeNum}" viewBox="0 0 ${sizeNum} ${sizeNum}">
+          <defs>
+            <clipPath id="roundedClip">
+              <rect width="${sizeNum}" height="${sizeNum}" rx="${sizeNum * 0.0625}" />
+            </clipPath>
+          </defs>
+          <image href="data:image/png;base64,${base64}" width="${sizeNum}" height="${sizeNum}" clip-path="url(#roundedClip)" />
+        </svg>`;
+
+        return new Response(svg, {
           headers: {
-            'Content-Type': 'image/png',
+            'Content-Type': 'image/svg+xml',
             'Cache-Control': 'public, max-age=86400',
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': '*',
+            'Content-Disposition': `inline; filename="letter-it-${sizeNum}x${sizeNum}-rounded.svg"`
           }
         });
       }
-    } catch {}
+    } catch {
+      // Fallback: generar SVG simple
+    }
   }
 
   // --- VALIDAR URL ---
@@ -68,7 +89,7 @@ export async function onRequest(context) {
   const initial = domain ? domain.charAt(0).toUpperCase() : "?";
   const sizeNum = parseInt(size) || 256;
 
-  // --- MANEJO DEL COLOR (EVITANDO TONOS CLAROS) ---
+  // --- MANEJO DEL COLOR ---
   let finalColor;
   let displayColor = 'random';
   
@@ -81,7 +102,6 @@ export async function onRequest(context) {
       });
     }
     
-    // Verificar si el color es muy claro
     const r = parseInt(cleanColor.substr(0, 2), 16);
     const g = parseInt(cleanColor.substr(2, 2), 16);
     const b = parseInt(cleanColor.substr(4, 2), 16);
@@ -119,16 +139,12 @@ export async function onRequest(context) {
     displayColor = finalColor.replace('#', '');
   }
 
-  // --- GENERAR SVG CON BORDES REDONDEADOS (rx="8") ---
+  // --- GENERAR SVG CON BORDES REDONDEADOS ---
   const titleText = `${domain} - ${sizeNum}px - ${displayColor}`;
   
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${sizeNum}" height="${sizeNum}" viewBox="0 0 128 128">
     <title>${titleText}</title>
-    <!-- Fondo con bordes redondeados (rx="8") -->
     <rect width="128" height="128" rx="8" fill="${finalColor}" />
-    <!-- Borde sutil -->
-    <rect width="128" height="128" rx="8" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-    <!-- Texto centrado -->
     <text x="64" y="64" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="64" font-weight="bold">${initial}</text>
   </svg>`;
 
