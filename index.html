@@ -38,7 +38,7 @@
         }
 
         .container {
-            max-width: 760px;
+            max-width: 820px;
             width: 100%;
             background: rgba(18, 18, 30, 0.8);
             backdrop-filter: blur(20px);
@@ -83,6 +83,13 @@
             z-index: -1;
         }
 
+        .logo-container img {
+            width: 52px;
+            height: 52px;
+            border-radius: 10px;
+            display: block;
+        }
+
         h1 {
             font-size: 2.4rem;
             font-weight: 800;
@@ -114,6 +121,7 @@
             border: 1px solid transparent;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .btn::before {
@@ -151,6 +159,28 @@
         .btn-donate:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 24px rgba(108, 92, 231, 0.35);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #ffffff;
+            border-color: #2563eb;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #ffffff;
+            border-color: #10b981;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35);
         }
 
         .btn svg {
@@ -206,6 +236,190 @@
             font-weight: 400;
         }
 
+        /* --- GENERADOR --- */
+        .generator-section {
+            background: rgba(13, 13, 25, 0.6);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(37, 99, 235, 0.08);
+        }
+
+        .generator-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .generator-title span {
+            background: rgba(37, 99, 235, 0.15);
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            color: #60a5fa;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .generator-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.08);
+            padding-bottom: 0.5rem;
+        }
+
+        .generator-tabs button {
+            background: transparent;
+            border: none;
+            color: #64748b;
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .generator-tabs button:hover {
+            color: #e0e0e0;
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .generator-tabs button.active {
+            color: #60a5fa;
+            background: rgba(37, 99, 235, 0.1);
+        }
+
+        .generator-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            color: #8899bb;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            border-radius: 8px;
+            padding: 0.6rem 0.8rem;
+            color: #e0e0e0;
+            font-size: 0.95rem;
+            font-family: 'SF Mono', monospace;
+            transition: border-color 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: rgba(37, 99, 235, 0.3);
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.05);
+        }
+
+        .form-group input::placeholder {
+            color: #4a5568;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .generator-preview {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            border: 1px solid rgba(37, 99, 235, 0.06);
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .generator-preview .preview-image {
+            flex-shrink: 0;
+        }
+
+        .generator-preview .preview-image img {
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+            display: block;
+            background: #0a0a12;
+        }
+
+        .generator-preview .preview-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            font-size: 0.9rem;
+            color: #8899bb;
+        }
+
+        .generator-preview .preview-info strong {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+        }
+
+        .generator-preview .preview-info code {
+            background: rgba(37, 99, 235, 0.08);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            color: #60a5fa;
+            font-size: 0.85rem;
+        }
+
+        .generator-preview .preview-url {
+            margin-top: 0.2rem;
+            word-break: break-all;
+            font-size: 0.85rem;
+        }
+
+        .generator-preview .preview-url a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        .generator-preview .preview-url a:hover {
+            text-decoration: underline;
+        }
+
+        .endpoint-badge {
+            display: inline-block;
+            background: rgba(37, 99, 235, 0.12);
+            padding: 0.1rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            color: #60a5fa;
+            font-weight: 600;
+            margin-left: 0.3rem;
+        }
+
+        /* --- FIN GENERADOR --- */
+
         .example-grid {
             display: flex;
             justify-content: center;
@@ -255,6 +469,28 @@
             border-radius: 4px;
             font-size: 0.75rem;
             color: #60a5fa;
+        }
+
+        .example-label .badge-rounded {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            font-size: 0.6rem;
+            padding: 0.05rem 0.4rem;
+            border-radius: 10px;
+            margin-left: 0.2rem;
+            font-weight: 600;
+        }
+
+        .example-label .badge-square {
+            display: inline-block;
+            background: rgba(37, 99, 235, 0.15);
+            color: #60a5fa;
+            font-size: 0.6rem;
+            padding: 0.05rem 0.4rem;
+            border-radius: 10px;
+            margin-left: 0.2rem;
+            font-weight: 600;
         }
 
         .example-label strong {
@@ -338,6 +574,12 @@
             color: #8899bb;
         }
 
+        .usage .param-table .param-example {
+            color: #f87171;
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+
         .footer {
             margin-top: 2rem;
             font-size: 0.85rem;
@@ -368,6 +610,59 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(16, 185, 129, 0.95);
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 0.3rem;
+            margin-left: 0.5rem;
+        }
+
+        .language-selector button {
+            background: rgba(37, 99, 235, 0.05);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            color: #64748b;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .language-selector button:hover {
+            background: rgba(37, 99, 235, 0.1);
+            color: #e0e0e0;
+        }
+
+        .language-selector button.active {
+            background: rgba(37, 99, 235, 0.15);
+            color: #60a5fa;
+            border-color: rgba(37, 99, 235, 0.2);
         }
 
         @media (max-width: 600px) {
@@ -410,119 +705,254 @@
             .usage .param-table td {
                 padding: 0.4rem 0.3rem 0.4rem 0;
             }
+
+            .generator-form {
+                grid-template-columns: 1fr;
+            }
+
+            .generator-preview {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .generator-section {
+                padding: 1.25rem;
+            }
+
+            .form-actions {
+                justify-content: center;
+            }
+
+            .generator-tabs {
+                justify-content: center;
+            }
+
+            .language-selector {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- Toast -->
+    <div id="toast" class="toast">✅ Favicon generated</div>
+
     <div class="container">
         <!-- Header -->
         <div class="header">
             <div class="logo-container">
-                <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 128 128">
-                    <rect width="128" height="128" rx="12" fill="#1a1a2e" />
-                    <rect width="128" height="128" rx="12" fill="none" stroke="#2563eb" stroke-width="2" opacity="0.4" />
-                    <text x="64" y="64" text-anchor="middle" dominant-baseline="central" fill="#2563eb" font-family="system-ui, sans-serif" font-size="68" font-weight="800" style="text-shadow: 0 0 30px rgba(37,99,235,0.3);">L</text>
-                </svg>
+                <img src="/images/favicon.png" alt="Letter-It Logo" width="52" height="52" />
             </div>
             <h1>Letter-It</h1>
+            <div class="language-selector">
+                <button data-lang="en" class="active">EN</button>
+                <button data-lang="es">ES</button>
+                <button data-lang="fr">FR</button>
+                <button data-lang="de">DE</button>
+                <button data-lang="ja">JA</button>
+                <button data-lang="zh">ZH</button>
+            </div>
             <div class="header-buttons">
                 <a href="https://github.com/quasvx/Letter-It/" target="_blank" rel="noopener noreferrer" class="btn btn-github">
                     <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-                    GitHub
+                    <span data-i18n="github">GitHub</span>
                 </a>
                 <a href="https://go.link-it.cc.cd/donate" target="_blank" rel="noopener noreferrer" class="btn btn-donate">
                     <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                    Donate
+                    <span data-i18n="donate">Donate</span>
                 </a>
             </div>
         </div>
 
-        <div class="subtitle">
+        <div class="subtitle" data-i18n="subtitle">
             Simple, fast favicon generation at the edge.
         </div>
 
-        <!-- Endpoint -->
+        <!-- Endpoints -->
         <div class="endpoint-box">
             <code>
-                /faviconV2?<span class="param">url</span>=<span class="value">https://google.com</span>&<span class="param">size</span>=<span class="value">128</span>&<span class="param">color</span>=<span class="value">4285f4</span> <span class="optional">(optional)</span>
+                <span style="color:#34d399;">faviconV1</span> (rounded) · 
+                <span style="color:#60a5fa;">faviconV2</span> (square)
+            </code>
+            <br><br>
+            <code>
+                /<span style="color:#34d399;">faviconV1</span>?<span class="param">url</span>=<span class="value">google.com</span>&<span class="param">size</span>=<span class="value">128</span>&<span class="param">color</span>=<span class="value">4285f4</span>
+            </code>
+            <br>
+            <code>
+                /<span style="color:#60a5fa;">faviconV2</span>?<span class="param">url</span>=<span class="value">google.com</span>&<span class="param">size</span>=<span class="value">128</span>&<span class="param">color</span>=<span class="value">4285f4</span>
             </code>
         </div>
 
+        <!-- ===== GENERADOR ===== -->
+        <div class="generator-section">
+            <div class="generator-title">
+                <span data-i18n="generator_title">🎨 Favicon Generator</span>
+                <span data-i18n="generator_badge">real endpoint</span>
+            </div>
+
+            <!-- Tabs -->
+            <div class="generator-tabs">
+                <button class="active" data-endpoint="faviconV1" id="tabV1">🔄 faviconV1 (Rounded)</button>
+                <button data-endpoint="faviconV2" id="tabV2">⬜ faviconV2 (Square)</button>
+            </div>
+
+            <div class="generator-form">
+                <div class="form-group">
+                    <label for="gen-url" data-i18n="domain_label">Domain / URL</label>
+                    <input type="text" id="gen-url" placeholder="google.com" value="google.com" />
+                </div>
+                <div class="form-group">
+                    <label for="gen-size" data-i18n="size_label">Size (px)</label>
+                    <input type="number" id="gen-size" placeholder="256" value="128" min="16" max="512" />
+                </div>
+                <div class="form-group">
+                    <label for="gen-color" data-i18n="color_label">Color HEX (without #)</label>
+                    <input type="text" id="gen-color" placeholder="4285f4" value="4285f4" maxlength="6" />
+                </div>
+                <div class="form-group" style="display:flex; justify-content:flex-end; align-items:flex-end;">
+                    <div class="form-actions">
+                        <button class="btn btn-primary" id="generateBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v16h16"/><path d="m4 20 7-7 4 4 7-7"/></svg>
+                            <span data-i18n="generate_btn">Generate</span>
+                        </button>
+                        <button class="btn btn-success" id="downloadBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/><polyline points="8 12 12 16 16 12"/><line x1="12" y1="2" x2="12" y2="16"/></svg>
+                            <span data-i18n="download_btn">Download SVG</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vista previa -->
+            <div class="generator-preview" id="previewContainer">
+                <div class="preview-image" id="previewImage">
+                    <img src="" alt="Favicon preview" id="previewImg" width="128" height="128" />
+                </div>
+                <div class="preview-info">
+                    <strong id="previewDomain">google.com</strong>
+                    <span id="previewDetails">128px · #4285f4</span>
+                    <span data-i18n="preview_letter">Letter: <strong id="previewLetter">G</strong></span>
+                    <span id="previewEndpoint" style="font-size:0.8rem; color:#60a5fa;">Endpoint: <strong>faviconV1</strong></span>
+                    <code id="previewUrl">/faviconV1?url=google.com&size=128&color=4285f4</code>
+                    <div class="preview-url">
+                        <a href="#" id="previewLink" target="_blank" data-i18n="view_endpoint">View on endpoint →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ===== FIN GENERADOR ===== -->
+
         <!-- Ejemplos -->
         <div class="example-grid">
+            <div class="example-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 128 128">
+                    <rect width="128" height="128" rx="8" fill="#4285f4" />
+                    <rect width="128" height="128" rx="8" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+                    <text x="64" y="64" text-anchor="middle" dominant-baseline="central" fill="#ffffff" font-family="system-ui, sans-serif" font-size="64" font-weight="700">G</text>
+                </svg>
+                <span class="example-label">
+                    <strong>Google</strong> · <code>4285f4</code>
+                    <span class="badge-rounded">rounded</span>
+                </span>
+            </div>
             <div class="example-item">
                 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 128 128">
                     <rect width="128" height="128" rx="0" fill="#4285f4" />
                     <rect width="128" height="128" rx="0" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
                     <text x="64" y="64" text-anchor="middle" dominant-baseline="central" fill="#ffffff" font-family="system-ui, sans-serif" font-size="64" font-weight="700">G</text>
                 </svg>
-                <span class="example-label"><strong>Google</strong> · <code>4285f4</code></span>
+                <span class="example-label">
+                    <strong>Google</strong> · <code>4285f4</code>
+                    <span class="badge-square">square</span>
+                </span>
             </div>
             <div class="example-item">
                 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 128 128">
-                    <rect width="128" height="128" rx="0" fill="#24292e" />
-                    <rect width="128" height="128" rx="0" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
+                    <rect width="128" height="128" rx="8" fill="#24292e" />
+                    <rect width="128" height="128" rx="8" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
                     <text x="64" y="64" text-anchor="middle" dominant-baseline="central" fill="#ffffff" font-family="system-ui, sans-serif" font-size="64" font-weight="700">G</text>
                 </svg>
-                <span class="example-label"><strong>GitHub</strong> · <code>24292e</code></span>
-            </div>
-            <div class="example-item">
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 128 128">
-                    <rect width="128" height="128" rx="0" fill="#1da1f2" />
-                    <rect width="128" height="128" rx="0" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
-                    <text x="64" y="64" text-anchor="middle" dominant-baseline="central" fill="#ffffff" font-family="system-ui, sans-serif" font-size="64" font-weight="700">T</text>
-                </svg>
-                <span class="example-label"><strong>Twitter</strong> · <code>1da1f2</code></span>
+                <span class="example-label">
+                    <strong>GitHub</strong> · <code>24292e</code>
+                    <span class="badge-rounded">rounded</span>
+                </span>
             </div>
         </div>
 
         <!-- Features -->
         <div class="features">
-            <span class="feature"><strong>⚡ Edge</strong> Cloudflare Pages</span>
-            <span class="feature"><strong>🎨 SVG</strong> Native vector</span>
-            <span class="feature"><strong>📏 Custom</strong> Size parameter</span>
-            <span class="feature"><strong>🎯 Color</strong> Custom HEX support</span>
-            <span class="feature"><strong>⬜ Square</strong> Clean design</span>
+            <span class="feature"><strong data-i18n="feature_edge">⚡ Edge</strong> <span data-i18n="feature_edge_desc">Cloudflare Pages</span></span>
+            <span class="feature"><strong data-i18n="feature_svg">🎨 SVG</strong> <span data-i18n="feature_svg_desc">Native vector</span></span>
+            <span class="feature"><strong data-i18n="feature_size">📏 Custom</strong> <span data-i18n="feature_size_desc">Size parameter</span></span>
+            <span class="feature"><strong data-i18n="feature_color">🎯 Color</strong> <span data-i18n="feature_color_desc">Custom HEX support</span></span>
+            <span class="feature"><strong data-i18n="feature_square">⬜ Square</strong> <span data-i18n="feature_square_desc">faviconV2</span></span>
+            <span class="feature"><strong data-i18n="feature_rounded">🔄 Rounded</strong> <span data-i18n="feature_rounded_desc">faviconV1</span></span>
         </div>
 
         <hr>
 
         <!-- Usage -->
         <div class="usage">
-            <p><strong>How it works:</strong> The endpoint extracts the first letter from your domain, assigns a random background color (or your custom color), and returns an SVG image ready to use as a favicon or avatar.</p>
+            <p data-i18n="how_it_works"><strong>How it works:</strong> The endpoint extracts the first letter from your domain, assigns a random background color (or your custom color), and returns an SVG image ready to use as a favicon or avatar.</p>
 
             <br>
-            <p><strong>Parameters:</strong></p>
+            <p data-i18n="endpoints_title"><strong>Endpoints:</strong></p>
             <table class="param-table">
                 <thead>
                     <tr>
-                        <th>Parameter</th>
-                        <th>Description</th>
-                        <th>Example</th>
+                        <th data-i18n="endpoint_header">Endpoint</th>
+                        <th data-i18n="style_header">Style</th>
+                        <th data-i18n="example_header">Example</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="param-name">url</span></td>
-                        <td class="param-desc">Domain to generate the favicon for</td>
-                        <td><code>google.com</code></td>
+                        <td><span class="param-name">/faviconV1</span></td>
+                        <td class="param-desc">🔄 <span data-i18n="rounded_style">Rounded corners</span></td>
+                        <td class="param-example">?url=google.com&size=128&color=4285f4</td>
                     </tr>
                     <tr>
-                        <td><span class="param-name">size</span></td>
-                        <td class="param-desc">Output size in pixels (default: 256)</td>
-                        <td><code>128</code></td>
-                    </tr>
-                    <tr>
-                        <td><span class="param-name">color</span></td>
-                        <td class="param-desc">Custom HEX color (optional, random if omitted)</td>
-                        <td><code>4285f4</code> or <code>#4285f4</code></td>
+                        <td><span class="param-name">/faviconV2</span></td>
+                        <td class="param-desc">⬜ <span data-i18n="square_style">Square corners</span></td>
+                        <td class="param-example">?url=google.com&size=128&color=4285f4</td>
                     </tr>
                 </tbody>
             </table>
 
             <br>
-            <p><strong>Popular color examples:</strong></p>
+            <p data-i18n="parameters_title"><strong>Parameters:</strong></p>
+            <table class="param-table">
+                <thead>
+                    <tr>
+                        <th data-i18n="param_header">Parameter</th>
+                        <th data-i18n="description_header">Description</th>
+                        <th data-i18n="example_header">Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="param-name">url</span></td>
+                        <td class="param-desc" data-i18n="url_desc">Domain to generate the favicon for</td>
+                        <td class="param-example">google.com</td>
+                    </tr>
+                    <tr>
+                        <td><span class="param-name">size</span></td>
+                        <td class="param-desc" data-i18n="size_desc">Output size in pixels (default: 256)</td>
+                        <td class="param-example">128</td>
+                    </tr>
+                    <tr>
+                        <td><span class="param-name">color</span></td>
+                        <td class="param-desc" data-i18n="color_desc">Custom HEX color (optional, random if omitted)</td>
+                        <td class="param-example">4285f4</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br>
+            <p data-i18n="popular_colors"><strong>Popular color examples:</strong></p>
             <pre style="background:rgba(13,13,25,0.6);padding:1rem;border-radius:8px;overflow-x:auto;font-size:0.85rem;color:#8899bb;border:1px solid rgba(37,99,235,0.06);">
 <span style="color:#60a5fa;"># Google Blue</span>
 ?url=google.com&color=4285f4
@@ -542,15 +972,487 @@
         </div>
 
         <div class="footer">
-            <a href="https://github.com/quasvx/Letter-It/" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://github.com/quasvx/Letter-It/" target="_blank" rel="noopener noreferrer" data-i18n="github">GitHub</a>
             <span class="separator">·</span>
-            <a href="https://go.link-it.cc.cd/donate" target="_blank" rel="noopener noreferrer">Donate</a>
+            <a href="https://go.link-it.cc.cd/donate" target="_blank" rel="noopener noreferrer" data-i18n="donate">Donate</a>
             <span class="separator">·</span>
-            MIT &copy; 2026 Letter-It
+            <span data-i18n="license">MIT &copy; 2026 Letter-It</span>
             <span class="separator">·</span>
-            Built with <span class="glow-text">Cloudflare Pages Functions</span>
+            <span data-i18n="built_with">Built with</span> <span class="glow-text" data-i18n="cloudflare">Cloudflare Pages Functions</span>
         </div>
     </div>
+
+    <script>
+        (function() {
+            // --- TRADUCCIONES ---
+            const translations = {
+                en: {
+                    title: "Letter-It | Favicon API",
+                    github: "GitHub",
+                    donate: "Donate",
+                    subtitle: "Simple, fast favicon generation at the edge.",
+                    generator_title: "🎨 Favicon Generator",
+                    generator_badge: "real endpoint",
+                    domain_label: "Domain / URL",
+                    size_label: "Size (px)",
+                    color_label: "Color HEX (without #)",
+                    generate_btn: "Generate",
+                    download_btn: "Download SVG",
+                    preview_letter: "Letter:",
+                    view_endpoint: "View on endpoint →",
+                    how_it_works: "How it works: The endpoint extracts the first letter from your domain, assigns a random background color (or your custom color), and returns an SVG image ready to use as a favicon or avatar.",
+                    endpoints_title: "Endpoints:",
+                    endpoint_header: "Endpoint",
+                    style_header: "Style",
+                    example_header: "Example",
+                    rounded_style: "Rounded corners",
+                    square_style: "Square corners",
+                    parameters_title: "Parameters:",
+                    param_header: "Parameter",
+                    description_header: "Description",
+                    url_desc: "Domain to generate the favicon for",
+                    size_desc: "Output size in pixels (default: 256)",
+                    color_desc: "Custom HEX color (optional, random if omitted)",
+                    popular_colors: "Popular color examples:",
+                    license: "MIT © 2026 Letter-It",
+                    built_with: "Built with",
+                    cloudflare: "Cloudflare Pages Functions",
+                    feature_edge: "⚡ Edge",
+                    feature_edge_desc: "Cloudflare Pages",
+                    feature_svg: "🎨 SVG",
+                    feature_svg_desc: "Native vector",
+                    feature_size: "📏 Custom",
+                    feature_size_desc: "Size parameter",
+                    feature_color: "🎯 Color",
+                    feature_color_desc: "Custom HEX support",
+                    feature_square: "⬜ Square",
+                    feature_square_desc: "faviconV2",
+                    feature_rounded: "🔄 Rounded",
+                    feature_rounded_desc: "faviconV1"
+                },
+                es: {
+                    title: "Letter-It | API de Favicon",
+                    github: "GitHub",
+                    donate: "Donar",
+                    subtitle: "Generación de favicons simple y rápida en el edge.",
+                    generator_title: "🎨 Generador de Favicon",
+                    generator_badge: "endpoint real",
+                    domain_label: "Dominio / URL",
+                    size_label: "Tamaño (px)",
+                    color_label: "Color HEX (sin #)",
+                    generate_btn: "Generar",
+                    download_btn: "Descargar SVG",
+                    preview_letter: "Letra:",
+                    view_endpoint: "Ver en el endpoint →",
+                    how_it_works: "Cómo funciona: El endpoint extrae la primera letra de tu dominio, asigna un color de fondo aleatorio (o tu color personalizado), y devuelve una imagen SVG lista para usar como favicon o avatar.",
+                    endpoints_title: "Endpoints:",
+                    endpoint_header: "Endpoint",
+                    style_header: "Estilo",
+                    example_header: "Ejemplo",
+                    rounded_style: "Esquinas redondeadas",
+                    square_style: "Esquinas cuadradas",
+                    parameters_title: "Parámetros:",
+                    param_header: "Parámetro",
+                    description_header: "Descripción",
+                    url_desc: "Dominio para generar el favicon",
+                    size_desc: "Tamaño de salida en píxeles (por defecto: 256)",
+                    color_desc: "Color HEX personalizado (opcional, aleatorio si se omite)",
+                    popular_colors: "Ejemplos de colores populares:",
+                    license: "MIT © 2026 Letter-It",
+                    built_with: "Hecho con",
+                    cloudflare: "Cloudflare Pages Functions",
+                    feature_edge: "⚡ Edge",
+                    feature_edge_desc: "Cloudflare Pages",
+                    feature_svg: "🎨 SVG",
+                    feature_svg_desc: "Vector nativo",
+                    feature_size: "📏 Personalizable",
+                    feature_size_desc: "Parámetro de tamaño",
+                    feature_color: "🎯 Color",
+                    feature_color_desc: "Soporte HEX personalizado",
+                    feature_square: "⬜ Cuadrado",
+                    feature_square_desc: "faviconV2",
+                    feature_rounded: "🔄 Redondeado",
+                    feature_rounded_desc: "faviconV1"
+                },
+                fr: {
+                    title: "Letter-It | API de Favicon",
+                    github: "GitHub",
+                    donate: "Faire un don",
+                    subtitle: "Génération de favicons simple et rapide à la périphérie.",
+                    generator_title: "🎨 Générateur de Favicon",
+                    generator_badge: "endpoint réel",
+                    domain_label: "Domaine / URL",
+                    size_label: "Taille (px)",
+                    color_label: "Couleur HEX (sans #)",
+                    generate_btn: "Générer",
+                    download_btn: "Télécharger SVG",
+                    preview_letter: "Lettre:",
+                    view_endpoint: "Voir sur l'endpoint →",
+                    how_it_works: "Comment ça marche : L'endpoint extrait la première lettre de votre domaine, attribue une couleur de fond aléatoire (ou votre couleur personnalisée), et renvoie une image SVG prête à être utilisée comme favicon ou avatar.",
+                    endpoints_title: "Endpoints:",
+                    endpoint_header: "Endpoint",
+                    style_header: "Style",
+                    example_header: "Exemple",
+                    rounded_style: "Coins arrondis",
+                    square_style: "Coins carrés",
+                    parameters_title: "Paramètres:",
+                    param_header: "Paramètre",
+                    description_header: "Description",
+                    url_desc: "Domaine pour générer le favicon",
+                    size_desc: "Taille de sortie en pixels (défaut: 256)",
+                    color_desc: "Couleur HEX personnalisée (optionnel, aléatoire si omis)",
+                    popular_colors: "Exemples de couleurs populaires:",
+                    license: "MIT © 2026 Letter-It",
+                    built_with: "Construit avec",
+                    cloudflare: "Cloudflare Pages Functions",
+                    feature_edge: "⚡ Edge",
+                    feature_edge_desc: "Cloudflare Pages",
+                    feature_svg: "🎨 SVG",
+                    feature_svg_desc: "Vecteur natif",
+                    feature_size: "📏 Personnalisable",
+                    feature_size_desc: "Paramètre de taille",
+                    feature_color: "🎯 Couleur",
+                    feature_color_desc: "Support HEX personnalisé",
+                    feature_square: "⬜ Carré",
+                    feature_square_desc: "faviconV2",
+                    feature_rounded: "🔄 Arrondi",
+                    feature_rounded_desc: "faviconV1"
+                },
+                de: {
+                    title: "Letter-It | Favicon API",
+                    github: "GitHub",
+                    donate: "Spenden",
+                    subtitle: "Einfache, schnelle Favicon-Generierung am Edge.",
+                    generator_title: "🎨 Favicon-Generator",
+                    generator_badge: "echter Endpoint",
+                    domain_label: "Domain / URL",
+                    size_label: "Größe (px)",
+                    color_label: "HEX-Farbe (ohne #)",
+                    generate_btn: "Generieren",
+                    download_btn: "SVG herunterladen",
+                    preview_letter: "Buchstabe:",
+                    view_endpoint: "Auf Endpoint ansehen →",
+                    how_it_works: "Wie es funktioniert: Der Endpoint extrahiert den ersten Buchstaben deiner Domain, weist eine zufällige Hintergrundfarbe (oder deine benutzerdefinierte Farbe) zu und gibt ein SVG-Bild zurück, das als Favicon oder Avatar verwendet werden kann.",
+                    endpoints_title: "Endpoints:",
+                    endpoint_header: "Endpoint",
+                    style_header: "Stil",
+                    example_header: "Beispiel",
+                    rounded_style: "Abgerundete Ecken",
+                    square_style: "Eckige Ecken",
+                    parameters_title: "Parameter:",
+                    param_header: "Parameter",
+                    description_header: "Beschreibung",
+                    url_desc: "Domain für das Favicon",
+                    size_desc: "Ausgabegröße in Pixeln (Standard: 256)",
+                    color_desc: "Benutzerdefinierte HEX-Farbe (optional, zufällig wenn weggelassen)",
+                    popular_colors: "Beliebte Farbbeispiele:",
+                    license: "MIT © 2026 Letter-It",
+                    built_with: "Erstellt mit",
+                    cloudflare: "Cloudflare Pages Functions",
+                    feature_edge: "⚡ Edge",
+                    feature_edge_desc: "Cloudflare Pages",
+                    feature_svg: "🎨 SVG",
+                    feature_svg_desc: "Nativer Vektor",
+                    feature_size: "📏 Anpassbar",
+                    feature_size_desc: "Größenparameter",
+                    feature_color: "🎯 Farbe",
+                    feature_color_desc: "Benutzerdefinierte HEX-Unterstützung",
+                    feature_square: "⬜ Eckig",
+                    feature_square_desc: "faviconV2",
+                    feature_rounded: "🔄 Abgerundet",
+                    feature_rounded_desc: "faviconV1"
+                },
+                ja: {
+                    title: "Letter-It | ファビコンAPI",
+                    github: "GitHub",
+                    donate: "寄付",
+                    subtitle: "エッジでシンプルかつ高速なファビコン生成。",
+                    generator_title: "🎨 ファビコンジェネレーター",
+                    generator_badge: "実際のエンドポイント",
+                    domain_label: "ドメイン / URL",
+                    size_label: "サイズ (px)",
+                    color_label: "HEXカラー（#なし）",
+                    generate_btn: "生成",
+                    download_btn: "SVGをダウンロード",
+                    preview_letter: "文字:",
+                    view_endpoint: "エンドポイントで表示 →",
+                    how_it_works: "仕組み: エンドポイントはドメインから最初の文字を抽出し、ランダムな背景色（またはカスタムカラー）を割り当て、ファビコンまたはアバターとして使用できるSVG画像を返します。",
+                    endpoints_title: "エンドポイント:",
+                    endpoint_header: "エンドポイント",
+                    style_header: "スタイル",
+                    example_header: "例",
+                    rounded_style: "角丸",
+                    square_style: "角が四角",
+                    parameters_title: "パラメータ:",
+                    param_header: "パラメータ",
+                    description_header: "説明",
+                    url_desc: "ファビコンを生成するドメイン",
+                    size_desc: "出力サイズ（ピクセル、デフォルト: 256）",
+                    color_desc: "カスタムHEXカラー（オプション、省略時はランダム）",
+                    popular_colors: "人気の色の例:",
+                    license: "MIT © 2026 Letter-It",
+                    built_with: "構築",
+                    cloudflare: "Cloudflare Pages Functions",
+                    feature_edge: "⚡ エッジ",
+                    feature_edge_desc: "Cloudflare Pages",
+                    feature_svg: "🎨 SVG",
+                    feature_svg_desc: "ネイティブベクター",
+                    feature_size: "📏 カスタム",
+                    feature_size_desc: "サイズパラメータ",
+                    feature_color: "🎯 カラー",
+                    feature_color_desc: "カスタムHEX対応",
+                    feature_square: "⬜ 四角",
+                    feature_square_desc: "faviconV2",
+                    feature_rounded: "🔄 角丸",
+                    feature_rounded_desc: "faviconV1"
+                },
+                zh: {
+                    title: "Letter-It | Favicon API",
+                    github: "GitHub",
+                    donate: "捐赠",
+                    subtitle: "在边缘简单快速地生成 favicon。",
+                    generator_title: "🎨 Favicon 生成器",
+                    generator_badge: "真实端点",
+                    domain_label: "域名 / URL",
+                    size_label: "大小 (像素)",
+                    color_label: "HEX 颜色（不含 #）",
+                    generate_btn: "生成",
+                    download_btn: "下载 SVG",
+                    preview_letter: "字母:",
+                    view_endpoint: "在端点查看 →",
+                    how_it_works: "工作原理：端点从您的域名中提取第一个字母，分配随机背景色（或您的自定义颜色），并返回一个 SVG 图像，可用作 favicon 或头像。",
+                    endpoints_title: "端点:",
+                    endpoint_header: "端点",
+                    style_header: "样式",
+                    example_header: "示例",
+                    rounded_style: "圆角",
+                    square_style: "方角",
+                    parameters_title: "参数:",
+                    param_header: "参数",
+                    description_header: "描述",
+                    url_desc: "要生成 favicon 的域名",
+                    size_desc: "输出大小（像素，默认: 256）",
+                    color_desc: "自定义 HEX 颜色（可选，省略则随机）",
+                    popular_colors: "流行颜色示例:",
+                    license: "MIT © 2026 Letter-It",
+                    built_with: "构建于",
+                    cloudflare: "Cloudflare Pages Functions",
+                    feature_edge: "⚡ 边缘",
+                    feature_edge_desc: "Cloudflare Pages",
+                    feature_svg: "🎨 SVG",
+                    feature_svg_desc: "原生矢量",
+                    feature_size: "📏 自定义",
+                    feature_size_desc: "大小参数",
+                    feature_color: "🎯 颜色",
+                    feature_color_desc: "自定义 HEX 支持",
+                    feature_square: "⬜ 方形",
+                    feature_square_desc: "faviconV2",
+                    feature_rounded: "🔄 圆角",
+                    feature_rounded_desc: "faviconV1"
+                }
+            };
+
+            // --- DETECTAR IDIOMA DEL NAVEGADOR ---
+            function detectLanguage() {
+                const browserLang = navigator.language || navigator.userLanguage;
+                const lang = browserLang.split('-')[0].toLowerCase();
+                const supported = ['en', 'es', 'fr', 'de', 'ja', 'zh'];
+                return supported.includes(lang) ? lang : 'en';
+            }
+
+            // --- APLICAR TRADUCCIÓN ---
+            let currentLang = detectLanguage();
+
+            function applyTranslations(lang) {
+                const t = translations[lang];
+                if (!t) return;
+
+                // Actualizar título
+                document.title = t.title;
+
+                // Elementos con data-i18n
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key] !== undefined) {
+                        // Si es un elemento con hijos, solo actualizar texto directo
+                        if (el.children.length === 0) {
+                            el.textContent = t[key];
+                        } else {
+                            // Para elementos con hijos, reemplazar solo el texto directo
+                            const childNodes = el.childNodes;
+                            let hasTextNode = false;
+                            childNodes.forEach(node => {
+                                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                                    node.textContent = t[key];
+                                    hasTextNode = true;
+                                }
+                            });
+                            if (!hasTextNode) {
+                                el.textContent = t[key];
+                            }
+                        }
+                    }
+                });
+
+                // Actualizar botones de idioma
+                document.querySelectorAll('.language-selector button').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.lang === lang);
+                });
+
+                currentLang = lang;
+            }
+
+            // --- EVENT LISTENERS PARA IDIOMAS ---
+            document.querySelectorAll('.language-selector button').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.dataset.lang;
+                    applyTranslations(lang);
+                    // Guardar preferencia en localStorage
+                    localStorage.setItem('letterit-lang', lang);
+                    showToast(`Idioma cambiado a ${lang.toUpperCase()}`, false);
+                });
+            });
+
+            // --- CARGAR IDIOMA GUARDADO O DETECTADO ---
+            const savedLang = localStorage.getItem('letterit-lang');
+            const initialLang = savedLang || detectLanguage();
+            applyTranslations(initialLang);
+
+            // --- Toast y demás funcionalidad del generador ---
+            const toast = document.getElementById('toast');
+
+            function showToast(message, isError = false) {
+                toast.textContent = message;
+                toast.style.background = isError ? 'rgba(239, 68, 68, 0.95)' : 'rgba(16, 185, 129, 0.95)';
+                toast.classList.add('show');
+                clearTimeout(toast._timeout);
+                toast._timeout = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+
+            // --- Elementos del generador ---
+            const urlInput = document.getElementById('gen-url');
+            const sizeInput = document.getElementById('gen-size');
+            const colorInput = document.getElementById('gen-color');
+            const generateBtn = document.getElementById('generateBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const previewImg = document.getElementById('previewImg');
+            const previewDomain = document.getElementById('previewDomain');
+            const previewDetails = document.getElementById('previewDetails');
+            const previewLetter = document.getElementById('previewLetter');
+            const previewUrl = document.getElementById('previewUrl');
+            const previewLink = document.getElementById('previewLink');
+            const previewEndpoint = document.getElementById('previewEndpoint');
+            const tabV1 = document.getElementById('tabV1');
+            const tabV2 = document.getElementById('tabV2');
+
+            let currentEndpoint = 'faviconV1';
+            let currentEndpointUrl = '';
+
+            function setActiveTab(endpoint) {
+                tabV1.classList.toggle('active', endpoint === 'faviconV1');
+                tabV2.classList.toggle('active', endpoint === 'faviconV2');
+                currentEndpoint = endpoint;
+                previewEndpoint.innerHTML = `Endpoint: <strong>${endpoint}</strong>`;
+                generateFavicon();
+            }
+
+            function generateFavicon() {
+                let domain = urlInput.value.trim();
+                const size = parseInt(sizeInput.value) || 128;
+                let color = colorInput.value.trim().replace('#', '');
+
+                if (!domain) {
+                    showToast('❌ ' + (currentLang === 'es' ? 'Ingresa un dominio válido' : 'Enter a valid domain'), true);
+                    return;
+                }
+
+                domain = domain.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
+                if (!domain) {
+                    showToast('❌ ' + (currentLang === 'es' ? 'Dominio inválido' : 'Invalid domain'), true);
+                    return;
+                }
+
+                if (color && !/^[0-9a-fA-F]{6}$/.test(color)) {
+                    showToast('❌ ' + (currentLang === 'es' ? 'Color HEX inválido (usa 6 dígitos: 4285f4)' : 'Invalid HEX color (use 6 digits: 4285f4)'), true);
+                    return;
+                }
+
+                let endpointUrl = `/${currentEndpoint}?url=${encodeURIComponent(domain)}&size=${size}`;
+                if (color) {
+                    endpointUrl += `&color=${color}`;
+                }
+                currentEndpointUrl = endpointUrl;
+
+                previewImg.style.opacity = '0.5';
+
+                const initial = domain.charAt(0).toUpperCase();
+                previewDomain.textContent = domain;
+                previewDetails.textContent = `${size}px · ${color ? '#' + color : (currentLang === 'es' ? 'aleatorio' : 'random')}`;
+                previewLetter.textContent = initial;
+                previewUrl.textContent = endpointUrl;
+                previewLink.href = endpointUrl;
+
+                previewImg.onload = function() {
+                    previewImg.style.opacity = '1';
+                    showToast(`✅ ${currentLang === 'es' ? 'Favicon generado' : 'Favicon generated'} (${currentEndpoint})`);
+                };
+                previewImg.onerror = function() {
+                    previewImg.style.opacity = '1';
+                    showToast('❌ ' + (currentLang === 'es' ? 'Error al generar el favicon' : 'Error generating favicon'), true);
+                };
+                previewImg.src = endpointUrl + '&t=' + Date.now();
+            }
+
+            function downloadSvg() {
+                if (!currentEndpointUrl) {
+                    showToast('❌ ' + (currentLang === 'es' ? 'Genera un favicon primero' : 'Generate a favicon first'), true);
+                    return;
+                }
+
+                fetch(currentEndpointUrl)
+                    .then(res => {
+                        if (!res.ok) throw new Error('Error al obtener el SVG');
+                        return res.text();
+                    })
+                    .then(svg => {
+                        const domain = previewDomain.textContent || 'favicon';
+                        const blob = new Blob([svg], { type: 'image/svg+xml' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `${domain}-${currentEndpoint}.svg`;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                        showToast('✅ ' + (currentLang === 'es' ? 'Favicon descargado' : 'Favicon downloaded'));
+                    })
+                    .catch(() => {
+                        showToast('❌ ' + (currentLang === 'es' ? 'Error al descargar el favicon' : 'Error downloading favicon'), true);
+                    });
+            }
+
+            // Event Listeners
+            tabV1.addEventListener('click', () => setActiveTab('faviconV1'));
+            tabV2.addEventListener('click', () => setActiveTab('faviconV2'));
+            generateBtn.addEventListener('click', generateFavicon);
+            downloadBtn.addEventListener('click', downloadSvg);
+
+            [urlInput, sizeInput, colorInput].forEach(input => {
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') generateFavicon();
+                });
+            });
+
+            // Generar al cargar
+            setActiveTab('faviconV1');
+
+            // Exponer funciones para debugging
+            window.applyTranslations = applyTranslations;
+        })();
+    </script>
 
 </body>
 </html>
