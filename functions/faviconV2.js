@@ -16,7 +16,6 @@ export async function onRequest(context) {
     });
   }
 
-  // Aceptar URL sin https://
   let finalUrl = targetUrl;
   if (!/^https?:\/\//i.test(finalUrl)) {
     finalUrl = 'https://' + finalUrl;
@@ -31,34 +30,29 @@ export async function onRequest(context) {
     });
   }
 
-  // --- EXTRAER DOMINIO LIMPIO ---
   const cleanDomain = finalUrl.replace(/^(https?:\/\/)?(www\.)?/, "").split('/')[0];
   
   // --- REGLA ESPECIAL: SI ES LETTER-IT, DEVOLVER PNG ---
   if (cleanDomain.toLowerCase() === 'letter-it.b4.cc.cd' || 
       cleanDomain.toLowerCase() === 'letter-it.pages.dev') {
     try {
-      // Intentar servir la imagen PNG desde /images/favicon.png
       const image = await context.env.ASSETS.fetch(new URL('/images/favicon.png', request.url));
       if (image.status === 200) {
-        // Devolver el PNG con título en el header
         return new Response(image.body, {
           headers: {
             'Content-Type': 'image/png',
             'Cache-Control': 'public, max-age=86400',
-            'Access-Control-Allow-Origin': '*',
-            'Content-Disposition': `inline; filename="letter-it-favicon.png"`
+            'Access-Control-Allow-Origin': '*'
           }
         });
       }
     } catch {
-      // Si falla, continuar con SVG (fallback)
+      // Fallback a SVG
     }
   }
 
-  // --- PARA CUALQUIER OTRO DOMINIO: GENERAR SVG ---
+  // --- GENERAR SVG ---
   const initial = cleanDomain ? cleanDomain.charAt(0).toUpperCase() : "?";
-
   const sizeNum = parseInt(size);
   if (isNaN(sizeNum) || sizeNum <= 0) {
     return new Response('Error: "size" must be a positive number.', {
@@ -67,7 +61,6 @@ export async function onRequest(context) {
     });
   }
 
-  // --- MANEJO DEL COLOR ---
   let finalColor;
   let displayColor = 'random';
   
@@ -86,7 +79,7 @@ export async function onRequest(context) {
     cleanColor = cleanColor.replace('#', '');
     
     if (!/^[0-9a-fA-F]{6}$/.test(cleanColor)) {
-      return new Response('Error: Invalid color format. Use 6-digit HEX.', {
+      return new Response('Error: Invalid color format.', {
         status: 400,
         headers: { 'Content-Type': 'text/plain' }
       });
@@ -105,21 +98,45 @@ export async function onRequest(context) {
     displayColor = finalColor.replace('#', '');
   }
 
-  // --- GENERAR SVG ---
-  const svg = `
+  const svgContent = `
   <svg xmlns="http://www.w3.org/2000/svg" width="${sizeNum}" height="${sizeNum}" viewBox="0 0 128 128">
     <rect width="128" height="128" rx="8" fill="${finalColor}" />
     <text x="64" y="64" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="64" font-weight="bold">${initial}</text>
   </svg>
   `.trim();
 
-  // Devolver SVG
-  return new Response(svg, {
+  // --- GENERAR HTML CON TÍTULO Y SVG CENTRADO ---
+  const pageTitle = `${cleanDomain} - ${sizeNum}px - ${displayColor}`;
+  
+  const html = `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter-It | ${pageTitle}</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #0a0a0f;
+      }
+    </style>
+  </head>
+  <body>
+    ${svgContent}
+  </body>
+  </html>
+  `;
+
+  return new Response(html, {
     headers: {
-      'Content-Type': 'image/svg+xml',
-      'Cache-Control': 'public, max-age=86400',
-      'Access-Control-Allow-Origin': '*',
-      'Content-Disposition': `inline; filename="${cleanDomain}-${sizeNum}x${sizeNum}-${displayColor}.svg"`
+      'Content-Type': 'text/html',
+      'Cache-Control': 'public, max-age=3600',
+      'Access-Control-Allow-Origin': '*'
     }
   });
 }
