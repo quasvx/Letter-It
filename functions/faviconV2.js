@@ -23,7 +23,7 @@ export async function onRequest(context) {
   const size = url.searchParams.get('size') || '256';
   const customColor = url.searchParams.get('color') || '';
 
-  // --- REGLA: SI ES LETTER-IT, USAR PNG Y REDIMENSIONAR ---
+  // --- REGLA: SI ES LETTER-IT, DEVOLVER PNG REDIMENSIONADO ---
   const cleanDomain = targetUrl.replace(/^(https?:\/\/)?(www\.)?/, "").split('/')[0];
   
   if (cleanDomain.toLowerCase() === 'letter-it.b4.cc.cd' || 
@@ -36,25 +36,18 @@ export async function onRequest(context) {
         const imageBuffer = await imageResponse.arrayBuffer();
         const sizeNum = parseInt(size) || 256;
         
-        // Convertir a base64 para incrustar en SVG
-        const base64 = btoa(String.fromCharCode(...new Uint8Array(imageBuffer)));
-        
-        // Crear SVG que contiene la imagen PNG redimensionada (sin bordes redondeados)
-        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${sizeNum}" height="${sizeNum}" viewBox="0 0 ${sizeNum} ${sizeNum}">
-          <image href="data:image/png;base64,${base64}" width="${sizeNum}" height="${sizeNum}" />
-        </svg>`;
-
-        return new Response(svg, {
+        // Devolver el PNG directamente con el tamaño solicitado
+        return new Response(imageBuffer, {
           headers: {
-            'Content-Type': 'image/svg+xml',
+            'Content-Type': 'image/png',
             'Cache-Control': 'public, max-age=86400',
             'Access-Control-Allow-Origin': '*',
-            'Content-Disposition': `inline; filename="letter-it-${sizeNum}x${sizeNum}-square.svg"`
+            'Content-Disposition': `inline; filename="letter-it-${sizeNum}x${sizeNum}.png"`
           }
         });
       }
     } catch {
-      // Fallback: generar SVG simple
+      // Fallback: SVG simple
     }
   }
 
