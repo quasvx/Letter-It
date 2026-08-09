@@ -18,7 +18,7 @@ export async function onRequest(context) {
     });
   }
   
-  // --- LÓGICA NORMAL DE FAVICONV2 (SOLO PARA B4.CC.CD) ---
+  // --- LÓGICA NORMAL DE FAVICONV2 ---
   const targetUrl = url.searchParams.get('url') || '';
   const size = url.searchParams.get('size') || '256';
   const customColor = url.searchParams.get('color') || '';
@@ -68,7 +68,7 @@ export async function onRequest(context) {
   const initial = domain ? domain.charAt(0).toUpperCase() : "?";
   const sizeNum = parseInt(size) || 256;
 
-  // --- MANEJO DEL COLOR ---
+  // --- MANEJO DEL COLOR (EVITANDO TONOS CLAROS) ---
   let finalColor;
   let displayColor = 'random';
   
@@ -80,12 +80,40 @@ export async function onRequest(context) {
         headers: { 'Content-Type': 'text/plain' }
       });
     }
-    finalColor = '#' + cleanColor;
-    displayColor = cleanColor;
+    
+    // Verificar si el color es muy claro
+    const r = parseInt(cleanColor.substr(0, 2), 16);
+    const g = parseInt(cleanColor.substr(2, 2), 16);
+    const b = parseInt(cleanColor.substr(4, 2), 16);
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+    
+    if (brightness > 200) {
+      // Si es muy claro, oscurecerlo
+      const darkR = Math.floor(r * 0.5);
+      const darkG = Math.floor(g * 0.5);
+      const darkB = Math.floor(b * 0.5);
+      finalColor = '#' + 
+        darkR.toString(16).padStart(2, '0') + 
+        darkG.toString(16).padStart(2, '0') + 
+        darkB.toString(16).padStart(2, '0');
+      displayColor = finalColor.replace('#', '');
+    } else {
+      finalColor = '#' + cleanColor;
+      displayColor = cleanColor;
+    }
   } else {
-    const r = Math.floor(Math.random() * 200) + 55;
-    const g = Math.floor(Math.random() * 200) + 55;
-    const b = Math.floor(Math.random() * 200) + 55;
+    // Generar color aleatorio (siempre oscuro)
+    let r, g, b, brightness;
+    let attempts = 0;
+    
+    do {
+      r = Math.floor(Math.random() * 200) + 30; // 30-230
+      g = Math.floor(Math.random() * 200) + 30;
+      b = Math.floor(Math.random() * 200) + 30;
+      brightness = (r * 299 + g * 587 + b * 114) / 1000;
+      attempts++;
+    } while (brightness > 180 && attempts < 50);
+    
     finalColor = '#' + 
       r.toString(16).padStart(2, '0') + 
       g.toString(16).padStart(2, '0') + 
@@ -93,12 +121,16 @@ export async function onRequest(context) {
     displayColor = finalColor.replace('#', '');
   }
 
-  // --- GENERAR SVG CON TÍTULO ---
+  // --- GENERAR SVG CON BORDE CUADRADO (SIN REDONDEO) ---
   const titleText = `${domain} - ${sizeNum}px - ${displayColor}`;
   
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${sizeNum}" height="${sizeNum}" viewBox="0 0 128 128">
     <title>${titleText}</title>
-    <rect width="128" height="128" rx="8" fill="${finalColor}" />
+    <!-- Fondo cuadrado SIN bordes redondeados (rx="0") -->
+    <rect width="128" height="128" rx="0" fill="${finalColor}" />
+    <!-- Borde sutil para definir el cuadrado -->
+    <rect width="128" height="128" rx="0" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+    <!-- Texto centrado -->
     <text x="64" y="64" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="64" font-weight="bold">${initial}</text>
   </svg>`;
 
