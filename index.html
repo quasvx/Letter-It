@@ -845,12 +845,12 @@
         </div>
         <!-- ===== FIN GENERADOR ===== -->
 
-        <!-- Ejemplos -->
+        <!-- Ejemplos - EXACTAMENTE como los genera el endpoint -->
         <div class="example-grid">
+            <!-- faviconV1 (rounded) -->
             <div class="example-item">
                 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 128 128">
                     <rect width="128" height="128" rx="8" fill="#4285f4" />
-                    <rect width="128" height="128" rx="8" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
                     <text x="64" y="64" text-anchor="middle" dominant-baseline="central" fill="#ffffff" font-family="system-ui, sans-serif" font-size="64" font-weight="700">G</text>
                 </svg>
                 <span class="example-label">
@@ -858,10 +858,11 @@
                     <span class="badge-rounded">rounded</span>
                 </span>
             </div>
+
+            <!-- faviconV2 (square) - SIN bordes -->
             <div class="example-item">
                 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 128 128">
                     <rect width="128" height="128" rx="0" fill="#4285f4" />
-                    <rect width="128" height="128" rx="0" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
                     <text x="64" y="64" text-anchor="middle" dominant-baseline="central" fill="#ffffff" font-family="system-ui, sans-serif" font-size="64" font-weight="700">G</text>
                 </svg>
                 <span class="example-label">
@@ -869,10 +870,11 @@
                     <span class="badge-square">square</span>
                 </span>
             </div>
+
+            <!-- faviconV1 (rounded) -->
             <div class="example-item">
                 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 128 128">
                     <rect width="128" height="128" rx="8" fill="#24292e" />
-                    <rect width="128" height="128" rx="8" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
                     <text x="64" y="64" text-anchor="middle" dominant-baseline="central" fill="#ffffff" font-family="system-ui, sans-serif" font-size="64" font-weight="700">G</text>
                 </svg>
                 <span class="example-label">
@@ -1256,8 +1258,25 @@
             function detectLanguage() {
                 const browserLang = navigator.language || navigator.userLanguage;
                 const lang = browserLang.split('-')[0].toLowerCase();
+                
                 const supported = ['en', 'es', 'fr', 'de', 'ja', 'zh'];
-                return supported.includes(lang) ? lang : 'en';
+                const langMap = {
+                    'pt': 'en', 'it': 'en', 'ru': 'en', 'ko': 'en',
+                    'ar': 'en', 'hi': 'en', 'nl': 'en', 'sv': 'en',
+                    'no': 'en', 'da': 'en', 'fi': 'en', 'pl': 'en',
+                    'tr': 'en', 'el': 'en', 'cs': 'en', 'hu': 'en',
+                    'ro': 'en', 'th': 'en', 'vi': 'en', 'id': 'en',
+                    'ms': 'en', 'fil': 'en', 'sw': 'en'
+                };
+
+                if (supported.includes(lang)) return lang;
+                if (langMap[lang]) return langMap[lang];
+                if (lang.length === 5 && lang.includes('-')) {
+                    const baseLang = lang.split('-')[0];
+                    if (supported.includes(baseLang)) return baseLang;
+                    if (langMap[baseLang]) return langMap[baseLang];
+                }
+                return 'en';
             }
 
             // --- APLICAR TRADUCCIÓN ---
@@ -1267,18 +1286,14 @@
                 const t = translations[lang];
                 if (!t) return;
 
-                // Actualizar título
                 document.title = t.title;
 
-                // Elementos con data-i18n
                 document.querySelectorAll('[data-i18n]').forEach(el => {
                     const key = el.getAttribute('data-i18n');
                     if (t[key] !== undefined) {
-                        // Si es un elemento con hijos, solo actualizar texto directo
                         if (el.children.length === 0) {
                             el.textContent = t[key];
                         } else {
-                            // Para elementos con hijos, reemplazar solo el texto directo
                             const childNodes = el.childNodes;
                             let hasTextNode = false;
                             childNodes.forEach(node => {
@@ -1294,7 +1309,6 @@
                     }
                 });
 
-                // Actualizar botones de idioma
                 document.querySelectorAll('.language-selector button').forEach(btn => {
                     btn.classList.toggle('active', btn.dataset.lang === lang);
                 });
@@ -1307,18 +1321,17 @@
                 btn.addEventListener('click', function() {
                     const lang = this.dataset.lang;
                     applyTranslations(lang);
-                    // Guardar preferencia en localStorage
                     localStorage.setItem('letterit-lang', lang);
-                    showToast(`Idioma cambiado a ${lang.toUpperCase()}`, false);
+                    showToast(`Language changed to ${lang.toUpperCase()}`, false);
                 });
             });
 
-            // --- CARGAR IDIOMA GUARDADO O DETECTADO ---
+            // --- CARGAR IDIOMA GUARDADO ---
             const savedLang = localStorage.getItem('letterit-lang');
             const initialLang = savedLang || detectLanguage();
             applyTranslations(initialLang);
 
-            // --- Toast y demás funcionalidad del generador ---
+            // --- TOAST ---
             const toast = document.getElementById('toast');
 
             function showToast(message, isError = false) {
@@ -1331,7 +1344,7 @@
                 }, 3000);
             }
 
-            // --- Elementos del generador ---
+            // --- GENERADOR ---
             const urlInput = document.getElementById('gen-url');
             const sizeInput = document.getElementById('gen-size');
             const colorInput = document.getElementById('gen-color');
@@ -1448,9 +1461,6 @@
 
             // Generar al cargar
             setActiveTab('faviconV1');
-
-            // Exponer funciones para debugging
-            window.applyTranslations = applyTranslations;
         })();
     </script>
 
