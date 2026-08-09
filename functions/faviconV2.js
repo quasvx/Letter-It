@@ -108,7 +108,7 @@ export async function onRequest(context) {
   </svg>
   `.trim();
 
-  // --- GENERAR HTML SOLO CON TÍTULO Y SVG ---
+  // --- GENERAR HTML SOLO CON LA IMAGEN CENTRADA ---
   const pageTitle = `${cleanDomain} - ${sizeNum}px - ${displayColor}`;
   
   const html = `
@@ -127,34 +127,10 @@ export async function onRequest(context) {
         min-height: 100vh;
         background: #0a0a0f;
       }
-      .container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 2rem;
-      }
-      .favicon-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 3rem;
-        background: #12121a;
-        border-radius: 16px;
-        border: 1px solid rgba(37, 99, 235, 0.15);
-        box-shadow: 0 0 60px rgba(37, 99, 235, 0.05);
-      }
-      .favicon-wrapper svg {
-        display: block;
-        border-radius: 8px;
-      }
     </style>
   </head>
   <body>
-    <div class="container">
-      <div class="favicon-wrapper">
-        ${svgContent}
-      </div>
-    </div>
+    ${svgContent}
   </body>
   </html>
   `;
