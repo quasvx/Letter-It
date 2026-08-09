@@ -28,22 +28,22 @@ color	Custom HEX color (default: random)	#4285f4 or 4285f4
 Examples
 With custom color:
 
-https://letter-it.pages.dev/faviconV2?url=https://google.com&size=128&color=4285f4
+https://letter-it.b4.cc.cd/faviconV2?url=https://google.com&size=128&color=4285f4
 
 Without color (random):
 
-https://letter-it.pages.dev/faviconV2?url=https://github.com&size=64
+https://letter-it.b4.cc.cd/faviconV2?url=https://github.com&size=64
 
 
 💻 Usage in your website
 
 
-(<)link rel="icon" href="https://letter-it.pages.dev/faviconV2?url=https://your-domain.com&size=64&color=4285f4"(>)
+(<)link rel="icon" href="https://letter-it.b4.cc.cd/faviconV2?url=https://your-domain.com&size=64&color=4285f4"(>)
 
 dont place the "(" and ")"
 
 <!-- As an avatar -->
-(<)img src="https://letter-it.pages.dev/faviconV2?url=https://user.com&size=128&color=ff0000" alt="Avatar"(>)
+(<)img src="https://letter-it.b4.cc.cd/faviconV2?url=https://user.com&size=128&color=ff0000" alt="Avatar"(>)
 
 📝 Error responses
 Code	Description
