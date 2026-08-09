@@ -1,1 +1,32 @@
-/favicon.ico /images/favicon.png 200
+# _redirects
+
+# Android Chrome - 512x512
+/favicon-512x512.png                /images/favicon.png                200
+/android-chrome-512x512.png         /images/favicon.png                200
+
+# Android Chrome - 192x192
+/favicon-192x192.png                /images/favicon.png                200
+/android-chrome-192x192.png         /images/favicon.png                200
+
+# Apple Touch Icon
+/apple-touch-icon.png               /images/favicon.png                200
+/apple-touch-icon-180x180.png       /images/favicon.png                200
+/apple-touch-icon-152x152.png       /images/favicon.png                200
+/apple-touch-icon-120x120.png       /images/favicon.png                200
+
+# Favicon estándar
+/favicon.ico                        /images/favicon.png                200
+/favicon-16x16.png                  /images/favicon.png                200
+/favicon-32x32.png                  /images/favicon.png                200
+/favicon-48x48.png                  /images/favicon.png                200
+/favicon-64x64.png                  /images/favicon.png                200
+/favicon-96x96.png                  /images/favicon.png                200
+/favicon-128x128.png                /images/favicon.png                200
+
+# Manifest y otros
+/site.webmanifest                   /images/favicon.png                200
+/manifest.json                      /images/favicon.png                200
+/browserconfig.xml                  /images/favicon.png                200
+/mstile-150x150.png                 /images/favicon.png                200
+/mstile-310x310.png                 /images/favicon.png                200
+/mstile-310x150.png                 /images/favicon.png                200
