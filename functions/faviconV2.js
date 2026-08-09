@@ -1,6 +1,24 @@
 // functions/faviconV2.js
 export async function onRequest(context) {
-  const url = new URL(context.request.url);
+  const request = context.request;
+  const url = new URL(request.url);
+  
+  // --- REDIRIGIR CUALQUIER DOMINIO A B4.CC.CD ---
+  if (url.hostname !== 'letter-it.b4.cc.cd') {
+    const newUrl = new URL(request.url);
+    newUrl.hostname = 'letter-it.b4.cc.cd';
+    newUrl.protocol = 'https';
+    
+    return new Response(null, {
+      status: 302,
+      headers: {
+        'Location': newUrl.toString(),
+        'Cache-Control': 'no-cache, no-store, must-revalidate'
+      }
+    });
+  }
+  
+  // --- LÓGICA NORMAL DE FAVICONV2 (SOLO PARA B4.CC.CD) ---
   const targetUrl = url.searchParams.get('url') || '';
   const size = url.searchParams.get('size') || '256';
   const customColor = url.searchParams.get('color') || '';
@@ -84,7 +102,6 @@ export async function onRequest(context) {
     <text x="64" y="64" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="64" font-weight="bold">${initial}</text>
   </svg>`;
 
-  // --- DEVOLVER SVG (NO PNG) ---
   return new Response(svg, {
     headers: {
       'Content-Type': 'image/svg+xml',
