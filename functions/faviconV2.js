@@ -1,9 +1,6 @@
-// functions/faviconV2.js
+// functions/faviconV1.js
 export async function onRequest(context) {
-  const request = context.request;
-  const url = new URL(request.url);
-  
-  // --- OBTENER PARÁMETROS ---
+  const url = new URL(context.request.url);
   const targetUrl = url.searchParams.get('url') || '';
   const size = url.searchParams.get('size') || '256';
   const customColor = url.searchParams.get('color') || '';
@@ -31,60 +28,23 @@ export async function onRequest(context) {
   }
 
   const cleanDomain = finalUrl.replace(/^(https?:\/\/)?(www\.)?/, "").split('/')[0];
-  
-  // --- REGLA ESPECIAL: SI ES LETTER-IT, DEVOLVER PNG ---
-  if (cleanDomain.toLowerCase() === 'letter-it.b4.cc.cd' || 
-      cleanDomain.toLowerCase() === 'letter-it.pages.dev') {
-    try {
-      const image = await context.env.ASSETS.fetch(new URL('/images/favicon.png', request.url));
-      if (image.status === 200) {
-        return new Response(image.body, {
-          headers: {
-            'Content-Type': 'image/png',
-            'Cache-Control': 'public, max-age=86400',
-            'Access-Control-Allow-Origin': '*'
-          }
-        });
-      }
-    } catch {
-      // Fallback a SVG
-    }
-  }
-
-  // --- GENERAR SVG ---
   const initial = cleanDomain ? cleanDomain.charAt(0).toUpperCase() : "?";
-  const sizeNum = parseInt(size);
-  if (isNaN(sizeNum) || sizeNum <= 0) {
-    return new Response('Error: "size" must be a positive number.', {
-      status: 400,
-      headers: { 'Content-Type': 'text/plain' }
-    });
-  }
+  const sizeNum = parseInt(size) || 256;
 
+  // --- MANEJO DEL COLOR ---
   let finalColor;
+  let displayColor = 'random';
   
   if (customColor) {
-    let decodedColor = customColor;
-    try {
-      decodedColor = decodeURIComponent(customColor);
-    } catch {
-      decodedColor = customColor;
-    }
-    
-    let cleanColor = decodedColor;
-    if (cleanColor.startsWith('%')) {
-      cleanColor = cleanColor.substring(1);
-    }
-    cleanColor = cleanColor.replace('#', '');
-    
+    let cleanColor = customColor.replace('#', '').replace('%', '');
     if (!/^[0-9a-fA-F]{6}$/.test(cleanColor)) {
       return new Response('Error: Invalid color format.', {
         status: 400,
         headers: { 'Content-Type': 'text/plain' }
       });
     }
-    
     finalColor = '#' + cleanColor;
+    displayColor = cleanColor;
   } else {
     const r = Math.floor(Math.random() * 200) + 55;
     const g = Math.floor(Math.random() * 200) + 55;
@@ -93,20 +53,46 @@ export async function onRequest(context) {
       r.toString(16).padStart(2, '0') + 
       g.toString(16).padStart(2, '0') + 
       b.toString(16).padStart(2, '0');
+    displayColor = finalColor.replace('#', '');
   }
 
-  const svg = `
-  <svg xmlns="http://www.w3.org/2000/svg" width="${sizeNum}" height="${sizeNum}" viewBox="0 0 128 128">
+  // --- GENERAR SVG CON TÍTULO (para accesibilidad y tooltip) ---
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${sizeNum}" height="${sizeNum}" viewBox="0 0 128 128">
+    <title>${cleanDomain} - ${sizeNum}px - ${displayColor}</title>
     <rect width="128" height="128" rx="8" fill="${finalColor}" />
     <text x="64" y="64" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="64" font-weight="bold">${initial}</text>
-  </svg>
-  `.trim();
+  </svg>`;
 
-  return new Response(svg, {
-    headers: {
-      'Content-Type': 'image/svg+xml',
-      'Cache-Control': 'public, max-age=86400',
-      'Access-Control-Allow-Origin': '*'
+  // --- CONVERTIR SVG A PNG USANDO API EXTERNA ---
+  try {
+    const svgEncoded = encodeURIComponent(svg);
+    const pngUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${sizeNum}x${sizeNum}&data=${svgEncoded}&format=png`;
+    
+    const response = await fetch(pngUrl);
+    
+    if (!response.ok) {
+      throw new Error('Failed to convert SVG to PNG');
     }
-  });
+    
+    const pngBuffer = await response.arrayBuffer();
+
+    return new Response(pngBuffer, {
+      headers: {
+        'Content-Type': 'image/png',
+        'Cache-Control': 'public, max-age=86400',
+        'Access-Control-Allow-Origin': '*',
+        'Content-Disposition': `inline; filename="${cleanDomain}-${sizeNum}.png"`
+      }
+    });
+    
+  } catch (error) {
+    // Fallback: devolver SVG si falla la conversión
+    return new Response(svg, {
+      headers: {
+        'Content-Type': 'image/svg+xml',
+        'Cache-Control': 'public, max-age=86400',
+        'Access-Control-Allow-Origin': '*'
+      }
+    });
+  }
 }
