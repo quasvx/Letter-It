@@ -31,10 +31,8 @@ export async function onRequest(context) {
     });
   }
 
-  // --- NUEVO: ACEPTAR URL SIN HTTPS:// ---
+  // Aceptar URL sin https://
   let finalUrl = targetUrl;
-  
-  // Si no tiene protocolo, agregar https://
   if (!/^https?:\/\//i.test(finalUrl)) {
     finalUrl = 'https://' + finalUrl;
   }
@@ -49,7 +47,7 @@ export async function onRequest(context) {
     });
   }
 
-  // Extraer el dominio limpio (para la inicial)
+  // Extraer el dominio limpio
   const cleanDomain = finalUrl.replace(/^(https?:\/\/)?(www\.)?/, "").split('/')[0];
   const initial = cleanDomain ? cleanDomain.charAt(0).toUpperCase() : "?";
 
@@ -64,9 +62,9 @@ export async function onRequest(context) {
 
   // --- MANEJO DEL COLOR ---
   let finalColor;
+  let displayColor = 'random'; // Para mostrar en el título
   
   if (customColor) {
-    // Decodificar URL (convierte %23 a #)
     let decodedColor = customColor;
     try {
       decodedColor = decodeURIComponent(customColor);
@@ -74,16 +72,12 @@ export async function onRequest(context) {
       decodedColor = customColor;
     }
     
-    // Si empieza con %, eliminarlo
     let cleanColor = decodedColor;
     if (cleanColor.startsWith('%')) {
       cleanColor = cleanColor.substring(1);
     }
-    
-    // Eliminar # si existe
     cleanColor = cleanColor.replace('#', '');
     
-    // Validar HEX (6 dígitos)
     if (!/^[0-9a-fA-F]{6}$/.test(cleanColor)) {
       return new Response('Error: Invalid color format. Use 6-digit HEX (e.g., 4285f4, %4285f4, or #4285f4)', {
         status: 400,
@@ -92,9 +86,8 @@ export async function onRequest(context) {
     }
     
     finalColor = '#' + cleanColor;
-    
+    displayColor = cleanColor; // Guardar sin # para el título
   } else {
-    // Color aleatorio (oscuro)
     const r = Math.floor(Math.random() * 200) + 55;
     const g = Math.floor(Math.random() * 200) + 55;
     const b = Math.floor(Math.random() * 200) + 55;
@@ -103,9 +96,14 @@ export async function onRequest(context) {
       r.toString(16).padStart(2, '0') + 
       g.toString(16).padStart(2, '0') + 
       b.toString(16).padStart(2, '0');
+    
+    displayColor = finalColor.replace('#', ''); // Mostrar el color generado
   }
 
-  // Generar SVG
+  // --- TÍTULO AUTOMÁTICO ---
+  const pageTitle = `${cleanDomain} - ${sizeNum}px - ${displayColor}`;
+
+  // Generar SVG con título
   const svg = `
   <svg xmlns="http://www.w3.org/2000/svg" width="${sizeNum}" height="${sizeNum}" viewBox="0 0 128 128">
     <rect width="128" height="128" rx="8" fill="${finalColor}" />
@@ -117,7 +115,9 @@ export async function onRequest(context) {
     headers: {
       'Content-Type': 'image/svg+xml',
       'Cache-Control': 'public, max-age=86400',
-      'Access-Control-Allow-Origin': '*'
+      'Cache-Control': 'public, max-age=86400',
+      'Access-Control-Allow-Origin': '*',
+      'Content-Disposition': `inline; filename="${cleanDomain}-${sizeNum}x${sizeNum}-${displayColor}.svg"`
     }
   });
 }
