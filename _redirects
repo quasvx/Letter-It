@@ -1,5 +1,8 @@
 # _redirects
 
+#faviconV2
+/faviconv2.ico                      /images/faviconv2.png              200
+
 # Android Chrome - 512x512
 /favicon-512x512.png                /images/favicon.png                200
 /android-chrome-512x512.png         /images/favicon.png                200
