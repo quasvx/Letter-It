@@ -1,8 +1,27 @@
-// functions/faviconV2.js
 export async function onRequest(context) {
   const request = context.request;
   const url = new URL(request.url);
-  
+
+  // --- LIMPIAR PARÁMETRO CACHE-BUSTER (?_=...) ---
+  if (url.searchParams.has('_')) {
+    const cleanUrl = new URL(request.url);
+    cleanUrl.searchParams.delete('_');
+    
+    // Aseguramos que conserve el dominio canónico si es necesario
+    if (cleanUrl.hostname !== 'letter-it.b4.cc.cd') {
+      cleanUrl.hostname = 'letter-it.b4.cc.cd';
+      cleanUrl.protocol = 'https';
+    }
+
+    return new Response(null, {
+      status: 302,
+      headers: {
+        'Location': cleanUrl.toString(),
+        'Cache-Control': 'no-cache, no-store, must-revalidate'
+      }
+    });
+  }
+
   // --- REDIRIGIR CUALQUIER DOMINIO A B4.CC.CD ---
   if (url.hostname !== 'letter-it.b4.cc.cd') {
     const newUrl = new URL(request.url);
@@ -17,7 +36,7 @@ export async function onRequest(context) {
       }
     });
   }
-  
+
   // --- LÓGICA DE FAVICONV2 ---
   const targetUrl = url.searchParams.get('url') || '';
   const size = url.searchParams.get('size') || '256';
@@ -37,13 +56,11 @@ export async function onRequest(context) {
   if (cleanDomain.toLowerCase() === 'letter-it.b4.cc.cd' || 
       cleanDomain.toLowerCase() === 'letter-it.pages.dev') {
     try {
-      // Obtener la imagen PNG de faviconv2
       const imageResponse = await context.env.ASSETS.fetch(new URL('/images/faviconv2.png', context.request.url));
       
       if (imageResponse.status === 200) {
         const imageBuffer = await imageResponse.arrayBuffer();
         
-        // Devolver el PNG directamente
         return new Response(imageBuffer, {
           headers: {
             'Content-Type': 'image/png',
