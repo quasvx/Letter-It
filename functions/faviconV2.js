@@ -1,13 +1,14 @@
 export async function onRequest(context) {
   const request = context.request;
-  const url = new URL(request.url);
+  const rawUrl = request.url;
 
-  // --- LIMPIAR PARÁMETRO CACHE-BUSTER (?_=...) ---
-  if (url.searchParams.has('_')) {
-    const cleanUrl = new URL(request.url);
-    cleanUrl.searchParams.delete('_');
-    
-    // Aseguramos que conserve el dominio canónico si es necesario
+  // --- DETECTAR Y CORTAR ÚNICAMENTE ?_=<números> AL FINAL ---
+  const cacheBusterRegex = /\?_=\d+$/;
+
+  if (cacheBusterRegex.test(rawUrl)) {
+    const cleanedUrlString = rawUrl.replace(cacheBusterRegex, '');
+    const cleanUrl = new URL(cleanedUrlString);
+
     if (cleanUrl.hostname !== 'letter-it.b4.cc.cd') {
       cleanUrl.hostname = 'letter-it.b4.cc.cd';
       cleanUrl.protocol = 'https';
@@ -21,6 +22,8 @@ export async function onRequest(context) {
       }
     });
   }
+
+  const url = new URL(rawUrl);
 
   // --- REDIRIGIR CUALQUIER DOMINIO A B4.CC.CD ---
   if (url.hostname !== 'letter-it.b4.cc.cd') {
